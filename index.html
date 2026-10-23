@@ -461,6 +461,20 @@ const MF = {}; MUSCLE_FILTERS.forEach(([k, l, r]) => { MF[k] = { label: l, regio
 /* Vergevingsgezind zoeken: hoofdletters, accenten, leestekens en enkelvoud/meervoud maken niet uit */
 const normWords = t => String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean)
   .map(w => w.length > 4 && /(es|en)$/.test(w) ? w.slice(0, -2) : w.length > 3 && /s$/.test(w) ? w.slice(0, -1) : w);
+/* Nederlandse zoekwoorden die ook de Engelse naam moeten vinden */
+const SYN = {
+  bankdrukken: ['bench press'], bankdruk: ['bench press'], schuin: ['incline'], schuine: ['incline'],
+  kuit: ['calf'], kuiten: ['calf'], kuitheffen: ['calf raise'], heffing: ['raise'], heffen: ['raise'],
+  zijwaart: ['lateral', 'side'], zijwaarts: ['lateral', 'side'], zijwaartse: ['lateral', 'side'], voorwaart: ['front'], voorwaartse: ['front'],
+  optrekken: ['pull up', 'chin up'], roeien: ['row'], schouderdrukken: ['shoulder press', 'overhead press'], schouder: ['shoulder', 'delt'],
+  borst: ['chest', 'pec', 'fly'], been: ['leg'], ben: ['leg'], dij: ['quad', 'leg'], bil: ['glute', 'hip thrust'], billen: ['glute', 'hip thrust'],
+  buik: ['ab', 'crunch', 'core'], buikspier: ['ab', 'crunch'], halter: ['barbell'], kabel: ['cable'], touw: ['rope'], liggend: ['lying'],
+  zittend: ['seated'], zittende: ['seated'], staand: ['standing'], eenarmig: ['single arm'], eenarmige: ['single arm'],
+  eenbenig: ['single leg'], eenbenige: ['single leg'], smal: ['close'], smalle: ['close'], breed: ['wide'], brede: ['wide'],
+  uitvalspa: ['lunge'], uitvalspas: ['lunge'], kniebuiging: ['squat'], hurken: ['squat'], strekken: ['extension'], strek: ['extension'],
+  pol: ['wrist'], pols: ['wrist'], onderhand: ['underhand', 'chin'], onderhandse: ['underhand', 'chin'], roemeense: ['romanian'],
+  opdrukken: ['push up'], achterkant: ['rear'], voorkant: ['front'], zijkant: ['lateral', 'side'], hamer: ['hammer'], rotatie: ['rotation']
+};
 const searchHay = new Map();
 function hayFor(e) {
   const key = e.id + '|' + e.name + '|' + (e.updatedAt || '');
@@ -468,13 +482,31 @@ function hayFor(e) {
   if (!h) {
     const slug = String(e.id).startsWith('lib-') ? e.id.slice(4) : '';
     const act = exAct(e);
-    const regs = Object.keys(act).filter(r => act[r] >= 2).map(r => R_NAME[r] + ' ' + (MUSCLE_FILTERS.find(f => f[2].includes(r)) || ['', ''])[1]).join(' ');
-    h = ' ' + normWords([e.name, ALIASES[slug] || '', EQUIP[e.equipment] || '', e.muscle, regs].join(' ')).join(' ');
+    const regs = Object.keys(act).filter(r => act[r] >= 3).map(r => R_NAME[r] + ' ' + (MUSCLE_FILTERS.find(f => f[2].includes(r)) || ['', ''])[1]).join(' ');
+    const name = normWords(e.name).join(' ');
+    const all = ' ' + normWords([e.name, ALIASES[slug] || '', EQUIP[e.equipment] || '', e.muscle, regs].join(' ')).join(' ');
+    h = { name: ' ' + name, nameC: name.replace(/ /g, ''), all, allC: all.replace(/ /g, '') };
     searchHay.set(key, h);
   }
   return h;
 }
-const matchQuery = (e, q) => { const toks = normWords(q); if (!toks.length) return true; const h = hayFor(e); return toks.every(t => h.includes(t)); };
+/* Per zoekwoord: het woord zelf of een synoniem moet voorkomen (spaties maken niet uit: "benchpress" = "bench press") */
+const SYN_N = {}; Object.keys(SYN).forEach(k => { const n = normWords(k).join(''); SYN_N[n] = (SYN_N[n] || []).concat(SYN[k]); });
+const tokenAlts = t => [t, ...(SYN_N[t] || [])].map(x => normWords(x).join(''));
+const tokHit = (h, t, field) => tokenAlts(t).some(a => h[field].includes(a) || h[field + 'C'].includes(a));
+function searchScore(e, q) {
+  const toks = normWords(q); if (!toks.length) return 0;
+  const h = hayFor(e);
+  if (!toks.every(t => tokHit(h, t, 'all'))) {
+    const qc = toks.join('');
+    if (!(qc.length > 3 && h.allC.includes(qc))) return -1;
+  }
+  const qc = toks.join('');
+  if (h.nameC.startsWith(qc)) return 5;
+  if (toks.every(t => tokHit(h, t, 'name'))) return tokenAlts(toks[0]).some(a => h.nameC.startsWith(a)) ? 4 : h.name.includes(' ' + toks[0]) ? 3 : 2;
+  return 1;
+}
+const matchQuery = (e, q) => searchScore(e, q) >= 0;
 const actLevelIn = (e, regions) => Math.max(0, ...regions.map(r => exAct(e)[r] || 0));
 const GROUP_ACT = {
   Borst: { chest_mid: 3, chest_upper: 2, chest_lower: 2, delt_front: 1, triceps_lat: 1 },
@@ -928,6 +960,9 @@ EXTRA_EXERCISES.trim().split('\n').forEach(line => {
   EX_ACT[slug] = [a, info];
   ALIASES[slug] = alias;
 });
+/* Engelse namen (zoals in de sportschool); de oude Nederlandse naam blijft vindbaar als zoekwoord */
+const EN_NAMES = {"bankdrukken": "Bench Press","schuin-bankdrukken": "Incline Bench Press","db-bankdrukken": "Dumbbell Bench Press","db-schuin-drukken": "Incline Dumbbell Press","db-flyes": "Dumbbell Fly","cable-flyes": "Cable Fly (Mid)","cable-fly-hl": "Cable Fly (High to Low)","cable-fly-lh": "Cable Fly (Low to High)","decline-bankdrukken": "Decline Bench Press","chest-press": "Machine Chest Press","pec-deck": "Pec Deck","dips": "Chest Dips","push-ups": "Push-Up","deadlift": "Deadlift","barbell-row": "Barbell Row","db-row": "Dumbbell Row","t-bar-row": "T-Bar Row","lat-pulldown": "Lat Pulldown","seated-row": "Seated Cable Row","optrekken": "Pull-Up","face-pulls": "Face Pull","pullover": "Dumbbell Pullover","back-extension": "Back Extension","squat": "Squat","front-squat": "Front Squat","leg-press": "Leg Press","rdl": "Romanian Deadlift","lunges": "Dumbbell Lunge","bulgarian": "Bulgarian Split Squat","goblet-squat": "Goblet Squat","hack-squat": "Hack Squat","leg-extension": "Leg Extension","leg-curl": "Lying Leg Curl","hip-thrust": "Hip Thrust","kuit-staand": "Standing Calf Raise","kuit-zittend": "Seated Calf Raise","adductor": "Hip Adduction Machine","ohp": "Overhead Press","db-ohp": "Dumbbell Shoulder Press","shoulder-press-machine": "Machine Shoulder Press","zijwaarts": "Lateral Raise","cable-zijwaarts": "Cable Lateral Raise","voorwaarts": "Front Raise","reverse-flyes": "Reverse Fly","arnold": "Arnold Press","shrugs": "Dumbbell Shrug","bb-curl": "Barbell Curl","db-curl": "Dumbbell Curl","hamer-curl": "Hammer Curl","preacher-curl": "Machine Preacher Curl","cable-curl": "Cable Curl","pushdown": "Triceps Pushdown","oh-triceps": "Overhead Cable Triceps Extension","skull-crushers": "Skull Crusher","close-grip": "Close-Grip Bench Press","cable-crunch": "Cable Crunch","leg-raise": "Hanging Leg Raise","ab-wheel": "Ab Wheel Rollout","russian-twist": "Russian Twist","smith-bankdrukken": "Smith Machine Bench Press","smith-schuin": "Smith Machine Incline Bench Press","smith-decline": "Smith Machine Decline Bench Press","paused-bench": "Paused Bench Press","db-decline": "Decline Dumbbell Press","incline-db-fly": "Incline Dumbbell Fly","incline-cable-fly": "Incline Cable Fly","incline-chest-press": "Incline Machine Chest Press","decline-chest-press": "Decline Machine Chest Press","hammer-chest-press": "Plate-Loaded Chest Press","cable-press": "Standing Cable Chest Press","single-cable-fly": "Single-Arm Cable Fly","seated-cable-fly": "Seated Cable Fly","deficit-push-ups": "Deficit Push-Up","incline-push-ups": "Incline Push-Up","decline-push-ups": "Decline Push-Up","weighted-dips": "Weighted Dips","machine-dips": "Machine Dips","landmine-press": "Landmine Press","floor-press": "Floor Press","db-squeeze-press": "Dumbbell Squeeze Press","svend-press": "Svend Press","sa-cable-lat-pulldown-cs": "Single-Arm Lat Pulldown (Chest-Supported)","sa-lat-pulldown": "Single-Arm Lat Pulldown (Kneeling)","close-grip-pulldown": "Close-Grip Lat Pulldown","wide-pulldown": "Wide-Grip Lat Pulldown","underhand-pulldown": "Underhand Lat Pulldown","machine-pulldown": "Machine Lat Pulldown","straight-arm-pulldown": "Straight-Arm Pulldown","cable-pullover": "Rope Cable Pullover","machine-pullover": "Machine Pullover","chinups": "Chin-Up","neutral-pullups": "Neutral-Grip Pull-Up","weighted-pullups": "Weighted Pull-Up","assisted-pullups": "Assisted Pull-Up","inverted-row": "Inverted Row","pendlay-row": "Pendlay Row","yates-row": "Underhand Barbell Row","seal-row": "Seal Row","chest-supported-db-row": "Chest-Supported Dumbbell Row","helms-row": "Helms Row","meadows-row": "Meadows Row","chest-supported-t-bar": "Chest-Supported T-Bar Row","machine-row": "Chest-Supported Machine Row","high-row-machine": "Machine High Row","low-row-machine": "Machine Low Row","sa-cable-row": "Single-Arm Cable Row","wide-cable-row": "Wide-Grip Seated Cable Row","gorilla-row": "Gorilla Row","kroc-row": "Kroc Row","rack-pull": "Rack Pull","45-back-ext": "Weighted 45° Back Extension","reverse-hyper": "Reverse Hyperextension","bb-shrug": "Barbell Shrug","prone-y-raise": "Incline Y-Raise","band-pull-apart": "Band Pull-Apart","trap-bar-deadlift": "Trap Bar Deadlift","sumo-deadlift": "Sumo Deadlift","good-morning": "Good Morning","seated-db-ohp": "Seated Dumbbell Shoulder Press","seated-bb-ohp": "Seated Barbell Overhead Press","smith-ohp": "Smith Machine Shoulder Press","push-press": "Push Press","handstand-pushup": "Handstand Push-Up","pike-pushup": "Pike Push-Up","machine-lateral": "Machine Lateral Raise","seated-lateral": "Seated Lateral Raise","lean-away-lateral": "Lean-Away Lateral Raise","incline-lateral": "Incline Side-Lying Lateral Raise","cable-lateral-behind": "Behind-the-Back Cable Lateral Raise","cable-y-raise": "Cable Y-Raise","lu-raise": "Lu Raise","upright-row": "Upright Row","cable-upright-row": "Cable Upright Row","cable-front-raise": "Cable Front Raise","plate-front-raise": "Plate Front Raise","reverse-pec-deck": "Reverse Pec Deck","cable-rear-delt-fly": "Cable Rear Delt Fly","seated-rear-delt-fly": "Seated Bent-Over Rear Delt Fly","rear-delt-row": "Rear Delt Row","external-rotation": "Cable External Rotation","db-external-rotation": "Side-Lying External Rotation","incline-curl": "Incline Dumbbell Curl","bayesian-curl": "Bayesian Cable Curl","spider-curl": "Spider Curl","concentration-curl": "Concentration Curl","ez-curl": "EZ-Bar Curl","reverse-curl": "Reverse Curl","cross-body-hammer": "Cross-Body Hammer Curl","incline-hammer-curl": "Incline Hammer Curl","rope-hammer": "Rope Hammer Curl","machine-curl": "Machine Biceps Curl","db-preacher": "Dumbbell Preacher Curl","ez-preacher": "EZ-Bar Preacher Curl","cable-preacher": "Cable Preacher Curl","drag-curl": "Drag Curl","zottman": "Zottman Curl","waiter-curl": "Waiter Curl","cable-curl-single": "Single-Arm Cable Curl","high-cable-curl": "High Cable Curl","rope-pushdown": "Rope Triceps Pushdown","sa-pushdown": "Single-Arm Triceps Pushdown","cross-body-extension": "Cross-Body Cable Triceps Extension","oh-db-ext": "Overhead Dumbbell Triceps Extension","oh-rope": "Overhead Rope Triceps Extension","sa-oh-cable": "Single-Arm Overhead Cable Extension","oh-ez": "Overhead EZ-Bar Triceps Extension","ez-skull": "EZ-Bar Skull Crusher","db-skull": "Dumbbell Skull Crusher","jm-press": "JM Press","tate-press": "Tate Press","kickback": "Dumbbell Triceps Kickback","cable-kickback": "Cable Triceps Kickback","triceps-machine": "Machine Triceps Extension","bench-dips": "Bench Dips","diamond-pushups": "Diamond Push-Up","close-grip-smith": "Smith Machine Close-Grip Bench Press","wrist-curl": "Wrist Curl","reverse-wrist-curl": "Reverse Wrist Curl","farmers-walk": "Farmer's Walk","dead-hang": "Dead Hang","plank": "Plank","side-plank": "Side Plank","crunch": "Crunch","weighted-crunch": "Weighted Crunch","machine-crunch": "Machine Crunch","decline-situp": "Decline Sit-Up","bicycle-crunch": "Bicycle Crunch","v-up": "V-Up","captains-chair": "Captain's Chair Knee Raise","hanging-knee-raise": "Hanging Knee Raise","toes-to-bar": "Toes-to-Bar","reverse-crunch": "Reverse Crunch","lying-leg-raise": "Lying Leg Raise","dead-bug": "Dead Bug","hollow-hold": "Hollow Hold","pallof": "Pallof Press","woodchopper": "Cable Woodchopper","db-side-bend": "Dumbbell Side Bend","landmine-rotation": "Landmine Rotation","suitcase-carry": "Suitcase Carry","low-bar-squat": "Low-Bar Squat","safety-bar-squat": "Safety Bar Squat","box-squat": "Box Squat","zercher-squat": "Zercher Squat","smith-squat": "Smith Machine Squat","pendulum-squat": "Pendulum Squat","belt-squat": "Belt Squat","cyclist-squat": "Heel-Elevated Cyclist Squat","sissy-squat": "Sissy Squat","reverse-nordic": "Reverse Nordic","leg-ext-single": "Single-Leg Extension","leg-press-single": "Single-Leg Press","leg-press-high-wide": "High & Wide Leg Press","split-squat": "Split Squat","ffe-split-squat": "Front-Foot-Elevated Split Squat","walking-lunges": "Walking Lunge","reverse-lunges": "Reverse Lunge","lateral-lunge": "Lateral Lunge","curtsy-lunge": "Curtsy Lunge","step-up": "Step-Up","leg-curl-seated": "Seated Leg Curl","leg-curl-standing": "Standing Single-Leg Curl","nordic": "Nordic Hamstring Curl","glute-ham-raise": "Glute-Ham Raise","db-rdl": "Dumbbell Romanian Deadlift","smith-rdl": "Smith Machine Romanian Deadlift","sl-rdl": "Single-Leg Romanian Deadlift","stiff-leg": "Stiff-Leg Deadlift","cable-pull-through": "Cable Pull-Through","kettlebell-swing": "Kettlebell Swing","glute-bridge": "Barbell Glute Bridge","smith-hip-thrust": "Smith Machine Hip Thrust","machine-hip-thrust": "Machine Hip Thrust","sl-hip-thrust": "Single-Leg Hip Thrust","cable-kickback-glute": "Cable Glute Kickback","glute-kickback-machine": "Machine Glute Kickback","abductor": "Hip Abduction Machine","cable-abduction": "Cable Hip Abduction","adductor-cable": "Cable Hip Adduction","copenhagen": "Copenhagen Plank","kuit-leg-press": "Leg Press Calf Raise","kuit-smith": "Smith Machine Calf Raise","donkey-calf": "Donkey Calf Raise","kuit-eenbenig": "Single-Leg Calf Raise","tibialis-raise": "Tibialis Raise","smith-shrug": "Smith Machine Shrug","rope-cable-row": "Rope Seated Cable Row","seated-db-curl": "Seated Dumbbell Curl","oblique-cable-crunch": "Oblique Cable Crunch","smith-split-squat": "Smith Machine Split Squat"};
+LIBRARY.forEach(row => { const en = EN_NAMES[row[0]]; if (en && en !== row[1]) { ALIASES[row[0]] = (ALIASES[row[0]] || '') + ' ' + row[1]; row[1] = en; } });
 
 /* ===== Kant-en-klare schema's =====
    Uitgangspunten (zie docs/BRONNEN.md): elke spier bij voorkeur 2x per week, ongeveer 10 tot 20 werksets per spier per week
@@ -1842,12 +1877,16 @@ function pickerList() {
   if (s.target === 'workout') { const w = getWorkout(ui.ctxWorkoutId); if (w) present = new Set(w.exercises.map(x => x.exerciseId)); }
   else if (s.target === 'replace') { const loc = locateWE(s.weId); if (loc) { present = new Set(loc.w.exercises.map(x => x.exerciseId)); replacing = loc.we.exerciseId; } }
   else { const t = getTemplate(ui.editingTemplateId); if (t) present = new Set(t.items.map(x => x.exerciseId)); }
-  const list = live(db.exercises).filter(e => e.id !== replacing && (!s.muscle || e.muscle === s.muscle) && matchQuery(e, q))
-    .sort((a, b) => a.name.localeCompare(b.name, 'nl'));
+  const scored = live(db.exercises).filter(e => e.id !== replacing && (!s.muscle || e.muscle === s.muscle)).map(e => [e, searchScore(e, q)]).filter(x => x[1] >= 0);
+  const list = scored.sort((a, b) => a[0].name.localeCompare(b[0].name, 'en')).map(x => x[0]);
+  const ranked = scored.slice().sort((a, b) => b[1] - a[1] || a[0].name.localeCompare(b[0].name, 'en')).map(x => x[0]);
   const item = e => `<button type="button" class="pick-item" data-act="picker-choose" data-id="${e.id}">
       <span>${esc(e.name)}</span><small>${present.has(e.id) ? 'al toegevoegd' : esc(mainText(exAct(e)) || EQUIP[e.equipment] || '')}</small></button>`;
   let html = '', shown = 0;
-  if (regs) {
+  if (q && !regs) {
+    shown = ranked.length;
+    if (shown) html += `<div class="pick-group"><h4>${shown} resultat${shown === 1 ? '' : 'en'}</h4>${ranked.map(item).join('')}</div>`;
+  } else if (regs) {
     [3, 2, 1].forEach(l => {
       const g = list.filter(e => actLevelIn(e, regs) === l);
       if (!g.length) return;
@@ -1887,19 +1926,23 @@ function renderRest() {
   </div>`;
 }
 let actx = null;
+/* Geluid voor de rusttimer. 'ambient' zorgt dat je eigen muziek (oortjes, Spotify) gewoon doorspeelt.
+   De audio wordt pas aangemaakt bij de eerste rusttimer en tussen de piepjes stilgezet. */
+function setAmbient() { try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } catch (e) { } }
 function unlockAudio() {
-  try {
-    if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback';
-  } catch (e) { }
+  setAmbient();
   try {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!actx && AC) actx = new AC();
-    if (actx && actx.state === 'suspended') actx.resume();
+    if (actx && actx.state === 'suspended') actx.resume().then(() => { if (!rest || rest.fired) actx.suspend(); }).catch(() => { });
   } catch (e) { }
 }
 function alarm() {
   try { if (navigator.vibrate) navigator.vibrate([250, 120, 250]); } catch (e) { }
   if (!actx) return;
+  setAmbient();
+  try { if (actx.state === 'suspended') actx.resume(); } catch (e) { }
+  setTimeout(() => { try { if (actx && actx.state === 'running') actx.suspend(); } catch (e) { } }, 1500);
   try {
     const t0 = actx.currentTime + 0.02;
     [0, 0.28, 0.56].forEach((d, i) => {
@@ -2001,7 +2044,7 @@ function startWorkout(t) {
   db.workouts.push(w);
   db.meta.activeWorkoutId = w.id;
   ui.openWE = null; ui.noteOpen = {}; ui.tab = 'training'; ui.editingTemplateId = null;
-  stopRest(); persist(); unlockAudio(); render(); window.scrollTo(0, 0);
+  stopRest(); persist(); render(); window.scrollTo(0, 0);
 }
 function currentTemplate() { return getTemplate(ui.editingTemplateId); }
 function findItem(id) { const t = currentTemplate(); return t ? { t, it: t.items.find(i => i.id === id) } : null; }
@@ -2308,7 +2351,7 @@ document.addEventListener('toggle', e => {
   if (t.dataset.tog === 'pick-map' && ui.sheet) ui.sheet.mapOpen = t.open;
 }, true);
 document.addEventListener('focusin', e => { if (e.target.classList && e.target.classList.contains('num')) { try { e.target.select(); } catch (x) { } } });
-document.addEventListener('pointerdown', unlockAudio, { passive: true });
+setAmbient();
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') persist(); else { updateClocks(); syncWakeLock(); } });
 window.addEventListener('pagehide', persist);
 
