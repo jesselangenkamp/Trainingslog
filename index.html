@@ -70,7 +70,8 @@
 }
 
 * { box-sizing: border-box; }
-html, body { background: var(--bg); color: var(--ink); }
+html, body { background: var(--bg); color: var(--ink); overflow-x: hidden; }
+@supports (overflow: clip) { html, body { overflow-x: clip; } }
 body {
   margin: 0; font-family: var(--font); font-size: 16px; line-height: 1.4;
   -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
@@ -256,7 +257,7 @@ figure.bm figcaption { display: grid; text-align: center; font-size: 12px; font-
 .body-map.tap .mz.l3:hover { fill: var(--m-3); }
 .pick-map { background: var(--soft); border-radius: 16px; padding: 4px 12px 10px; }
 .pick-map summary { cursor: pointer; font-weight: 700; min-height: 40px; display: flex; align-items: center; color: var(--accent-ink); }
-.pick-map figure.bm { max-width: 280px; margin: 0 auto; }
+.pick-map figure.bm { max-width: 210px; margin: 0 auto; }
 .sel-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--accent-soft); color: var(--accent-soft-ink); border-radius: 12px; padding: 6px 6px 6px 12px; font-size: 14px; position: sticky; top: -10px; z-index: 2; }
 .sel-bar .btn { min-height: 36px; background: var(--card); color: var(--accent-ink); }
 .ex-actions.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -282,6 +283,20 @@ figure.bm figcaption { display: grid; text-align: center; font-size: 12px; font-
 .recov-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 14px; font-size: 13.5px; margin-top: 8px; line-height: 1.25; }
 .recov-grid > div { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 30px; border-bottom: 1px solid var(--chip); }
 .recov-grid > div > span:first-child { display: flex; align-items: center; min-width: 0; }
+.head-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.head-row > h1, .head-row > h2, .head-row > h3, .head-row > strong { flex: 1; min-width: 0; margin: 0; }
+.tip-btn { width: 40px; height: 40px; margin: -6px -8px -6px 0; border: 0; border-radius: 999px; background: transparent; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.tip-btn.on { color: var(--accent-ink); background: var(--accent-soft); }
+.tip-body { background: var(--accent-soft); color: var(--accent-soft-ink); border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.45; }
+.lead { margin: 0; color: var(--ink); line-height: 1.45; }
+.warn { margin: 0; font-size: 14px; color: var(--danger); font-weight: 600; }
+.lvl-list { display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.lvl-list > div { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 8px; }
+.lvl-list .lvl { display: flex; align-items: center; color: var(--muted); font-weight: 600; }
+.badges { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+.badges:empty { display: none; }
+.badge.soft { background: var(--chip); color: var(--muted); }
+span.mchip { display: inline-block; }
 /* Grafiek */
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
 .chart .grid { stroke: var(--chip); stroke-width: 1; }
@@ -325,14 +340,16 @@ figure.bm figcaption { display: grid; text-align: center; font-size: 12px; font-
 .restbar-inner.done .acts button { background: var(--card); color: var(--accent-ink); }
 .sheet-backdrop { position: fixed; inset: 0; background: var(--backdrop); z-index: 40; }
 .sheet {
-  position: fixed; z-index: 41; left: 0; right: 0; bottom: 0; max-height: 88vh; overflow-y: auto; overscroll-behavior: contain;
+  position: fixed; z-index: 41; left: 0; right: 0; bottom: 0; max-height: 88vh; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; touch-action: pan-y;
   background: var(--card); border-radius: 24px 24px 0 0; box-shadow: 0 -8px 32px var(--shadow);
   padding-top: 10px;
   padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   padding-left: max(20px, env(safe-area-inset-left, 0px));
   padding-right: max(20px, env(safe-area-inset-right, 0px));
 }
-.sheet-inner { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.sheet-inner { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.sheet-inner > * { min-width: 0; max-width: 100%; }
+.chips { touch-action: pan-x pan-y; }
 .sheet .grabber { width: 40px; height: 4px; border-radius: 2px; background: var(--line); align-self: center; }
 .sheet h3 { margin: 4px 0 0; font-size: 20px; font-weight: 800; }
 .sheet p { margin: 0; color: var(--muted); }
@@ -341,7 +358,8 @@ figure.bm figcaption { display: grid; text-align: center; font-size: 12px; font-
 .chip[aria-pressed="true"] { background: var(--dark); color: var(--on-dark); }
 .pick-group h4 { margin: 10px 0 2px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
 .pick-item { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 48px; border: 0; border-bottom: 1px solid var(--chip); background: none; text-align: left; font-weight: 600; padding: 0 2px; }
-.pick-item small { color: var(--muted); font-weight: 500; font-size: 13px; flex: none; }
+.pick-item > span { min-width: 0; }
+.pick-item small { color: var(--muted); font-weight: 500; font-size: 13px; flex: 0 1 auto; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; }
 .toast {
   position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: calc(var(--nav-h) + 24px + env(safe-area-inset-bottom, 0px));
   background: var(--dark); color: var(--on-dark); padding: 12px 16px; border-radius: 12px; font-weight: 600; font-size: 14px;
@@ -538,7 +556,9 @@ const exAct = ex => (ex && ex.act) || {};
 const exInfo = ex => { const slug = ex && String(ex.id).startsWith('lib-') ? ex.id.slice(4) : null; return slug && EX_ACT[slug] ? EX_ACT[slug][1] : ''; };
 const actStates = act => { const st = {}; Object.keys(act).forEach(r => { if (act[r]) st[r] = 'l' + act[r]; }); return st; };
 const byLevel = (act, l) => REGIONS.filter(([r]) => act[r] === l).map(([r]) => r);
-const mainText = act => byLevel(act, 3).map(r => R_NAME[r]).join(', ');
+const R_SHORT = { traps_mid: 'Midden rug', lats: 'Lats', triceps_long: 'Triceps (lange kop)', triceps_lat: 'Triceps (zijkop)', forearm_flex: 'Onderarm', forearm_ext: 'Onderarm (strekkers)', abductors: 'Heup buitenkant', quads_rf: 'Rechte dijspier', quads_vl: 'Quadriceps', quads_vm: 'Quadriceps (traan)', adductors: 'Adductoren', hamstrings_bf: 'Hamstrings', hamstrings_st: 'Hamstrings', calves_gastro: 'Kuit', calves_soleus: 'Kuit (soleus)', traps_upper: 'Trapezius', traps_lower: 'Onderste trapezius' };
+const shortNames = rs => [...new Set(rs.map(r => R_SHORT[r] || R_NAME[r]))].join(', ');
+const mainText = act => shortNames(byLevel(act, 3));
 
 /* ===== Spierfiguur (eigen tekening) =====
    Linkerhelft getekend in een vlak van 200 breed; mirror: true spiegelt naar rechts.
@@ -1133,7 +1153,7 @@ function placeholders(w, we) {
   return we.sets.map(s => {
     const src = s.warmup ? pw[wi++] : pk[ki++];
     const kg = src ? src.kg : (last ? last.kg : null);
-    const reps = src ? src.reps : (last && !s.warmup && !last.warm ? last.reps : (we.targetReps || null));
+    const reps = src ? src.reps : s.warmup ? null : (last && !last.warm ? last.reps : (we.targetReps || null));
     last = { kg: s.kg != null ? s.kg : kg, reps: s.reps != null ? s.reps : reps, warm: s.warmup };
     return { kg, reps };
   });
@@ -1157,6 +1177,7 @@ function locateWE(weId) {
 
 /* ================= Schermstatus ================= */
 const ui = {
+  tips: {}, recovAll: false,
   tab: 'training', period: 'week', progressEx: null, ptSel: null,
   openWE: null, noteOpen: {}, editingWorkoutId: null, editingTemplateId: null, ctxWorkoutId: null,
   sheet: null
@@ -1228,12 +1249,14 @@ function recoveryCard() {
   const L = lastTrainedDays();
   const txt = d => d == null ? '–' : d <= 0 ? 'vandaag' : d === 1 ? 'gisteren' : d + ' d';
   const cls = d => d == null ? '' : d <= 1 ? 'l3' : d <= 3 ? 'l2' : 'l1';
-  return `<details class="card recov" ${ui.recovOpen === false ? '' : 'open'} data-tog="recov">
-    <summary><strong>Herstel per spier</strong><span class="muted"> · laatst getraind</span></summary>
-    <div class="recov-grid">${MUSCLE_FILTERS.map(([k, l]) => `<div><span><span class="dot ${cls(L[k])}"></span>${l}</span><span class="muted nowrap">${txt(L[k])}</span></div>`).join('')}</div>
-    <div class="legend" style="margin-top:8px"><span><i style="background:var(--m-3)"></i>0–1 dag: herstelt nog</span><span><i style="background:var(--m-2)"></i>2–3 dagen</span><span><i style="background:var(--m-1)"></i>4+ dagen: fris</span></div>
-    <p class="muted" style="font-size:13px;margin:6px 0 0">– = nog niet getraind. Telt alleen als de spier hoofdspier was of sterk meewerkte. Meestal is een spier na 2 tot 3 dagen weer klaar voor een nieuwe zware training.</p>
-  </details>`;
+  const recent = MUSCLE_FILTERS.filter(([k]) => L[k] != null && L[k] <= 3).sort((a, b) => L[a[0]] - L[b[0]]);
+  return `<section class="card stack recov">
+    <div class="head-row"><strong>Herstel</strong>${tipBtn('recov', 'herstel')}</div>
+    ${tipBody('recov', 'Hoe lang geleden je elke spier trainde, als hoofdspier of sterk meewerkend. Donker: 0–1 dag geleden, herstelt nog. Lichter: 2–3 dagen. Meestal is een spier na 2 tot 3 dagen klaar voor een nieuwe zware training.')}
+    ${recent.length ? `<div class="mchips">${recent.map(([k, l]) => `<span class="mchip ${cls(L[k])}">${l}<small>${txt(L[k])}</small></span>`).join('')}</div>` : '<p class="muted" style="margin:0">Alle spieren zijn uitgerust.</p>'}
+    ${ui.recovAll ? `<div class="recov-grid">${MUSCLE_FILTERS.map(([k, l]) => `<div><span><span class="dot ${cls(L[k])}"></span>${l}</span><span class="muted nowrap">${txt(L[k])}</span></div>`).join('')}</div>` : ''}
+    <button type="button" class="btn-text" style="align-self:flex-start;min-height:36px;padding:0" data-act="recov-all">${ui.recovAll ? 'Minder tonen' : 'Alle spieren'}</button>
+  </section>`;
 }
 
 /* ---------- Training: startscherm ---------- */
@@ -1288,7 +1311,6 @@ function workoutEditor(w, mode) {
       </div>
       <div class="row-between end">
         <div class="min0" style="flex:1">
-          <div class="eyebrow">${w.templateId && getTemplate(w.templateId) ? 'Schema' : 'Training'}</div>
           <label class="sr" for="w-name">Naam van de training</label>
           <input class="title-input" id="w-name" data-in="w-name" value="${esc(w.name)}" autocomplete="off">
         </div>
@@ -1345,11 +1367,11 @@ function exerciseCard(w, we) {
     </div>
     <div class="ex-info">
       <div class="min0">
-        <div class="ex-sub">${pww ? `<button type="button" class="link-inline" data-act="ex-history" data-id="${we.exerciseId}">Vorige: ${wwText(pww)}</button>` : 'Nog geen eerdere data'} · rust ${fmtClock(restFor(we))}</div>
+        <div class="ex-sub">${pww ? `<button type="button" class="link-inline" data-act="ex-history" data-id="${we.exerciseId}">Vorige: ${wwText(pww)}</button>` : ''}${pww ? ' · ' : ''}Rust ${fmtClock(restFor(we))}</div>
         ${ex && ex.pinnedNote ? `<div class="pin-note">${ICON.pin}<span>${esc(ex.pinnedNote)}</span></div>` : ''}
         ${(() => { const act = exAct(ex); const m3 = byLevel(act, 3), m2 = byLevel(act, 2), m1 = byLevel(act, 1);
-          return m3.length ? `<div class="ex-muscles"><div><span class="dot l3"></span><strong>${esc(m3.map(r => R_NAME[r]).join(', '))}</strong></div>
-            ${m2.length + m1.length ? `<div class="muted">+ ${m2.length + m1.length} spier${m2.length + m1.length === 1 ? '' : 'en'} die meewerk${m2.length + m1.length === 1 ? 't' : 'en'} · <button type="button" class="link-inline" data-act="ex-info" data-id="${we.exerciseId}">bekijk</button></div>` : ''}</div>` : ''; })()}
+          return m3.length ? `<div class="ex-muscles"><div><span class="dot l3"></span><strong>${esc(shortNames(m3))}</strong></div>
+            </div>` : ''; })()}
       </div>
       <div class="mini-map">${bodySvg(actStates(exAct(ex)), viewFor(exAct(ex)))}</div>
     </div>
@@ -1397,9 +1419,9 @@ function progressView() {
       <button type="button" data-act="period" data-p="month" aria-pressed="${p === 'month'}">Per maand</button>
     </div>
     <div class="tiles">
-      <div class="tile"><div class="v">${inP.length}</div><div class="l">trainingen ${periodWord}</div></div>
-      <div class="tile"><div class="v">${sets}</div><div class="l">werksets ${periodWord}</div></div>
-      <div class="tile"><div class="v">${recs}</div><div class="l">records ${periodWord}</div></div>
+      <div class="tile"><div class="v">${inP.length}</div><div class="l">trainingen</div></div>
+      <div class="tile"><div class="v">${sets}</div><div class="l">werksets</div></div>
+      <div class="tile"><div class="v">${recs}</div><div class="l">records</div></div>
     </div>`;
   const mc = muscleCard(inP, p, periodWord);
   if (!opts.length) {
@@ -1426,11 +1448,10 @@ function muscleCard(ws, p, periodWord) {
   const groups = [...new Set(ids.map(id => R_GROUP[id]))];
   const r1 = v => fmtNum(Math.round(v * 10) / 10);
   return `<div class="card stack">
-    <strong>Getrainde spieren ${periodWord}</strong>
+    <div class="head-row"><strong>Getrainde spieren ${periodWord}</strong>${tipBtn('mload', 'getrainde spieren')}</div>
+    ${tipBody('mload', `Kleur = aantal werksets per spierdeel ${periodWord}: licht ${leg[0]}, midden ${leg[1]}, donker ${leg[2]}. Een set telt volledig voor de hoofdspier, half voor een spier die sterk meewerkt en voor een kwart voor een spier die meehelpt.`)}
     ${bodySvg(st, { caps: true, label: ids.length ? 'Getrainde spieren: ' + ids.map(id => R_NAME[id]).join(', ') : 'Nog geen spieren getraind' })}
-    <div class="legend"><span><i style="background:var(--m-1)"></i>${leg[0]}</span><span><i style="background:var(--m-2)"></i>${leg[1]}</span><span><i style="background:var(--m-3)"></i>${leg[2]} sets per spierdeel</span></div>
-    ${ids.length ? groups.map(g => `<div class="pick-group"><h4>${g}</h4><div class="rows muscle-rows">${ids.filter(id => R_GROUP[id] === g).sort((a, b) => load[b] - load[a]).map(id => `<div><span><span class="dot ${st[id]}"></span>${R_NAME[id]}</span><strong>${r1(load[id])} ${load[id] === 1 ? 'set' : 'sets'}</strong></div>`).join('')}</div></div>`).join('') + `
-    <p class="muted" style="margin:0;font-size:13px">Een werkset telt volledig voor de hoofdspier, half voor een spier die sterk meewerkt en voor een kwart voor een spier die meehelpt.</p>`
+    ${ids.length ? `<details class="prog-day" data-tog="mrows" ${ui.mrowsOpen ? 'open' : ''}><summary><strong>Sets per spier</strong></summary>${groups.map(g => `<div class="pick-group"><h4>${g}</h4><div class="rows muscle-rows">${ids.filter(id => R_GROUP[id] === g).sort((a, b) => load[b] - load[a]).map(id => `<div><span><span class="dot ${st[id]}"></span>${R_NAME[id]}</span><strong>${r1(load[id])}</strong></div>`).join('')}</div></div>`).join('')}</details>`
     : `<p class="muted" style="margin:0">Nog geen werksets ${periodWord}.</p>`}
   </div>`;
 }
@@ -1524,13 +1545,13 @@ function schemasView() {
     <header class="stack"><h1>Schema's</h1></header>
     <button type="button" class="card list-card prog-entry" data-act="programs-open">
       <span class="name">Kant‑en‑klare schema's</span>
-      <span class="meta">Kies een split, zoals Upper/Lower voor 4 dagen per week, en voeg de schema's met één tik toe.</span>
+      <span class="meta">Kies een split en voeg hem met één tik toe.</span>
     </button>
     <h2>Mijn schema's</h2>
     <div class="stack">
       ${tpls.map(t => `<button type="button" class="card list-card" data-act="edit-template" data-id="${t.id}">
         <span class="name">${esc(t.name || 'Naamloos schema')}</span>
-        <span class="meta">${t.items.length ? esc(t.items.map(i => exName(i.exerciseId)).join(', ')) : 'Nog geen oefeningen'}</span>
+        <span class="meta ellipsis">${t.items.length ? t.items.length + ' oefeningen · ' + esc(t.items.map(i => exName(i.exerciseId)).join(', ')) : 'Nog geen oefeningen'}</span>
       </button>`).join('')}
       <button type="button" class="btn btn-dashed btn-lg" data-act="new-template">+ Nieuw schema</button>
     </div>
@@ -1548,9 +1569,10 @@ function schemasView() {
         </select>
       </div>
     </div>
-    <h2>Back-up</h2>
+    <div class="head-row"><h2>Back-up</h2>${tipBtn('backup', 'back-up')}</div>
+    ${tipBody('backup', 'Je trainingen staan alleen op deze telefoon. Verwijder je de app van je beginscherm, dan is alles weg. Bewaar daarom af en toe een back-up in Bestanden of iCloud Drive. Met "Back-up terugzetten" haal je hem terug, ook op een nieuwe telefoon.')}
     <div class="card stack">
-      <p style="margin:0" class="muted">Je trainingen staan alleen op deze telefoon. Bewaar af en toe een back-up in Bestanden of iCloud Drive. Laatste back-up: <strong style="color:var(--ink)">${last ? fmtDateShort(last) : 'nog nooit'}</strong>.</p>
+      <div class="row-between"><span class="muted">Laatste back-up</span><strong>${last ? fmtDateShort(last) : 'nog nooit'}</strong></div>
       <button type="button" class="btn btn-accent btn-lg" data-act="backup">Back-up maken</button>
       <label class="btn btn-soft btn-lg" for="restore-file">Back-up terugzetten</label>
       <input type="file" id="restore-file" class="sr" accept="application/json,.json" data-ch="restore">
@@ -1564,24 +1586,23 @@ function programsView() {
   const r1 = v => fmtNum(Math.round(v * 2) / 2);
   return `
     <button type="button" class="link-back" data-act="programs-close">‹ Schema's</button>
-    <header class="stack"><h1>Kant‑en‑klare schema's</h1>
-      <p class="muted" style="margin:0">Gebaseerd op onderzoek naar spiergroei: elke spier bij voorkeur 2 keer per week, ongeveer 10 tot 20 werksets per spier per week, de meeste sets tussen 6 en 15 herhalingen. Na het toevoegen kun je alles aanpassen.</p>
+    <header class="stack"><div class="head-row"><h1>Kant‑en‑klare schema's</h1>${tipBtn('progs', 'kant-en-klare schema\'s')}</div>
+      ${tipBody('progs', 'Gebaseerd op onderzoek naar spiergroei: elke spier bij voorkeur 2 keer per week, ongeveer 10 tot 20 werksets per spier per week, en de meeste sets tussen 6 en 15 herhalingen. Na het toevoegen kun je alles aanpassen. Bij "Werksets per week" telt een set volledig voor de hoofdspier, half voor een spier die sterk meewerkt en voor een kwart voor een spier die meehelpt.')}
     </header>
     <div class="chips" role="group" aria-label="Split">
       <button type="button" class="chip" data-act="program-split" data-k="" aria-pressed="${!f}">Alle splits</button>
       ${SPLITS.map(([k, l]) => `<button type="button" class="chip" data-act="program-split" data-k="${k}" aria-pressed="${f === k}">${l}</button>`).join('')}
     </div>
     ${list.map(pr => { const L = programLoad(pr); return `<article class="card stack prog-card">
-      <div class="row-between" style="align-items:flex-start"><div class="min0"><div class="list-card"><span class="name">${esc(pr.name)}</span></div>
-        <div class="meta muted" style="font-size:14px">${pr.days} trainingen per week${pr.featured ? ' · past bij jouw 4 keer per week' : ''}</div></div>
-        ${added.has(pr.id) ? '<span class="badge">Toegevoegd</span>' : ''}</div>
-      <p style="margin:0">${esc(pr.who)}</p>
-      <div class="info-box">${ICON.info}<p>${esc(pr.why)}</p></div>
+      <div class="head-row" style="align-items:flex-start"><div class="min0" style="flex:1"><div class="list-card"><span class="name">${esc(pr.name)}</span></div>
+        <div class="badges">${pr.featured ? '<span class="badge">Past bij jou</span>' : ''}${added.has(pr.id) ? '<span class="badge soft">Toegevoegd</span>' : ''}</div></div>
+        ${tipBtn('pr-' + pr.id, pr.name)}</div>
+      ${tipBody('pr-' + pr.id, esc(pr.who) + '<br><br>' + esc(pr.why))}
       ${pr.plan.map(([day, items]) => `<details class="prog-day"><summary><strong>${esc(day)}</strong><span class="muted"> · ${items.length} oefeningen</span></summary>
         <div class="rows">${items.map(([slug, w, n, r, rest]) => `<div><span class="min0">${esc(exName('lib-' + slug))}</span><span class="muted nowrap">${w ? w + ' opw. + ' : ''}${n} × ${r} · ${fmtClock(rest)}</span></div>`).join('')}</div></details>`).join('')}
-      <details class="prog-day"><summary><strong>Werksets per week</strong><span class="muted"> · per spier</span></summary>
+      <details class="prog-day"><summary><strong>Werksets per week</strong></summary>
         <div class="vol-grid">${show.map(([k, l]) => `<div><span>${l}</span><strong>${r1(L[k])}</strong></div>`).join('')}</div>
-        <p class="muted" style="font-size:13px;margin:6px 0 0">Een set telt volledig voor de hoofdspier, half voor een spier die sterk meewerkt en voor een kwart voor een spier die meehelpt.</p></details>
+</details>
       <button type="button" class="btn ${added.has(pr.id) ? 'btn-soft' : 'btn-accent'} btn-lg" data-act="program-add" data-id="${pr.id}">${added.has(pr.id) ? 'Nog een keer toevoegen' : 'Toevoegen aan mijn schema\'s'}</button>
     </article>`; }).join('')}`;
 }
@@ -1626,6 +1647,9 @@ function stepper(it, field, min, max) {
 }
 
 /* ---------- Sheets (pop-ups van onderen) ---------- */
+/* Uitleg achter een ⓘ-knop: tipBtn plaatst het icoon, tipBody de tekst die verschijnt na een tik */
+function tipBtn(id, label) { const open = !!ui.tips[id]; return `<button type="button" class="tip-btn${open ? ' on' : ''}" data-act="tip" data-id="${id}" aria-expanded="${open}" aria-label="Uitleg: ${esc(label)}">${ICON.info}</button>`; }
+function tipBody(id, html) { return ui.tips[id] ? `<div class="tip-body">${html}</div>` : ''; }
 function keepSheetScroll() {
   const sh = $('.sheet'); const sc = sh ? sh.scrollTop : 0;
   const det = $('.sheet details.pick-map'); if (det && ui.sheet) ui.sheet.mapOpen = det.open;
@@ -1663,16 +1687,16 @@ function sheetHtml(s) {
     if (s.confirmRemove) return confirmSheet('Oefening verwijderen?', `${esc(exName(we.exerciseId))} en ${doneN} afgevinkte set${doneN === 1 ? '' : 's'} worden uit deze training gehaald.`, 'ex-remove-yes', 'Ja, verwijderen', { danger: true });
     const restOpts = [45, 60, 75, 90, 120, 150, 180, 240, 300];
     return `<h3 id="sheet-title">${esc(exName(we.exerciseId))}</h3>
-      <div class="field"><label for="we-rest">Rusttijd bij deze oefening</label>
+      <button type="button" class="btn btn-soft btn-lg" data-act="ex-replace">Vervangen</button>
+      <button type="button" class="btn btn-soft btn-lg" data-act="ex-history" data-id="${we.exerciseId}">Geschiedenis</button>
+      <div class="field"><label for="we-rest">Rusttijd</label>
         <select class="select" id="we-rest" data-ch="we-rest">${restOpts.map(v => `<option value="${v}" ${restFor(we) === v ? 'selected' : ''}>${fmtClock(v)} min</option>`).join('')}</select></div>
       <div class="tpl-grid">
         <button type="button" class="btn btn-soft btn-lg" data-act="ex-move" data-d="-1" ${i === 0 ? 'disabled style="opacity:.4"' : ''}>${ICON.up} Omhoog</button>
         <button type="button" class="btn btn-soft btn-lg" data-act="ex-move" data-d="1" ${i === w.exercises.length - 1 ? 'disabled style="opacity:.4"' : ''}>${ICON.down} Omlaag</button>
       </div>
-      <button type="button" class="btn btn-soft btn-lg" data-act="ex-replace">Vervangen door andere oefening</button>
-      <button type="button" class="btn btn-soft btn-lg" data-act="ex-history" data-id="${we.exerciseId}">Geschiedenis</button>
       <button type="button" class="btn btn-soft btn-lg" data-act="muscle-edit" data-id="${we.exerciseId}">Spieren aanpassen</button>
-      <button type="button" class="btn btn-soft btn-lg" data-act="ex-remove" style="color:var(--danger)">Verwijderen uit deze training</button>
+      <button type="button" class="btn btn-soft btn-lg" data-act="ex-remove" style="color:var(--danger)">Verwijderen</button>
       <button type="button" class="btn-text" data-act="close-sheet">Sluiten</button>`;
   }
   if (s.type === 'picker') {
@@ -1693,21 +1717,14 @@ function sheetHtml(s) {
     const st = {}; (regs || []).forEach(r => { st[r] = 'l3'; });
     const rep = s.target === 'replace' ? locateWE(s.weId) : null;
     return `<h3 id="sheet-title">${rep ? 'Vervangen: ' + esc(exName(rep.we.exerciseId)) : 'Oefening toevoegen'}</h3>
-      ${rep ? `<p style="font-size:14px">Hieronder staan oefeningen die dezelfde hoofdspier trainen.${rep.we.sets.some(x => x.done) ? ' Je afgevinkte sets van deze oefening worden gewist.' : ''}</p>` : ''}
+      ${rep && rep.we.sets.some(x => x.done) ? `<p class="warn">Je afgevinkte sets van deze oefening worden gewist.</p>` : ''}
       <label class="sr" for="pk-q">Zoek een oefening</label>
-      <input class="text" id="pk-q" type="search" placeholder="Zoek, bijv. skull crusher of brede rugspier" value="${esc(s.q)}" data-in="picker-q" autocomplete="off">
-      <div class="chip-label">Groep</div>
-      <div class="chips" role="group" aria-label="Groep">
-        <button type="button" class="chip" data-act="picker-muscle" data-m="" aria-pressed="${!s.muscle}">Alle groepen</button>
-        ${MUSCLES.map(m => `<button type="button" class="chip" data-act="picker-muscle" data-m="${m}" aria-pressed="${s.muscle === m}">${m}</button>`).join('')}
-      </div>
-      <div class="chip-label">Spier</div>
-      <div class="chips" role="group" aria-label="Spier">
+      <input class="text" id="pk-q" type="search" placeholder="Zoek oefening of spier" value="${esc(s.q)}" data-in="picker-q" autocomplete="off">
+      <div class="chips" role="group" aria-label="Filter op spier">
         ${MUSCLE_FILTERS.map(([k, l]) => `<button type="button" class="chip" data-act="picker-mf" data-k="${k}" aria-pressed="${s.mf === k && !s.region}">${l}</button>`).join('')}
       </div>
       <details class="pick-map" ${s.mapOpen === false ? '' : 'open'} data-tog="pick-map">
-        <summary>Kies via de spierfiguur</summary>
-        <p class="muted" style="font-size:13px;margin:4px 0 6px">Tik op een spier om te zien welke oefeningen die trainen.</p>
+        <summary>Tik op een spier</summary>
         ${bodySvg(st, { caps: true, tap: true })}
       </details>
       ${regs ? `<div class="sel-bar"><span>Spier: <strong>${esc(s.region ? R_NAME[s.region] : MF[s.mf].label)}</strong></span><button type="button" class="btn btn-soft" data-act="picker-clear">Wissen ✕</button></div>` : ''}
@@ -1754,13 +1771,12 @@ function sheetHtml(s) {
   if (s.type === 'exinfo') {
     const ex = getEx(s.exId); if (!ex) return '';
     const act = exAct(ex), vf = viewFor(act), info = exInfo(ex);
-    return `<h3 id="sheet-title">${esc(ex.name)}</h3>
-      ${info ? `<div class="info-box">${ICON.info}<p>${esc(info)}</p></div>` : ''}
+    return `<div class="head-row"><h3 id="sheet-title">${esc(ex.name)}</h3>${tipBtn('s-guide', 'over deze indeling')}</div>
+      ${tipBody('s-guide', 'De indeling is een richtlijn, gebaseerd op onderzoek naar spieractiviteit en spiergroei. Hoeveel een spier meedoet, verschilt per persoon, techniek, grip en hoek.')}
+      ${info ? `<p class="lead">${esc(info)}</p>` : ''}
       <div class="big-map">${bodySvg(actStates(act), Object.assign({ caps: true, label: 'Getrainde spieren: ' + Object.keys(act).map(r => R_NAME[r]).join(', ') }, vf))}</div>
       ${vf.view !== 'both' || vf.crop ? `<details class="more"><summary>Hele lichaam bekijken</summary>${bodySvg(actStates(act), { caps: true })}</details>` : ''}
-      ${actLegend()}
-      ${[3, 2, 1].map(l => { const rs = byLevel(act, l); return rs.length ? `<div class="pick-group"><h4><span class="dot l${l}"></span>${LEVEL_NAME[l]}</h4><p style="margin:0;color:var(--ink)">${rs.map(r => esc(R_NAME[r])).join(', ')}</p></div>` : ''; }).join('')}
-      <p class="muted" style="margin:0;font-size:13px">Deze indeling is een richtlijn, gebaseerd op onderzoek naar spieractiviteit en spiergroei. Hoeveel een spier precies meedoet, verschilt per persoon, techniek, grip en hoek.</p>
+      <div class="lvl-list">${[3, 2, 1].map(l => { const rs = byLevel(act, l); return rs.length ? `<div><span class="lvl"><span class="dot l${l}"></span>${LEVEL_NAME[l]}</span><span>${rs.map(r => esc(R_NAME[r])).join(', ')}</span></div>` : ''; }).join('')}</div>
       <button type="button" class="btn btn-soft btn-lg" data-act="muscle-edit" data-id="${ex.id}">Spieren aanpassen</button>
       <button type="button" class="btn-text" data-act="close-sheet">Sluiten</button>`;
   }
@@ -1971,7 +1987,7 @@ function handleRestoreFile(file) {
 let toastTimer = null;
 function toast(msg) {
   const el = $('#toast'); el.textContent = msg; el.hidden = false;
-  clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 2800);
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 2200);
 }
 
 /* ================= Acties ================= */
@@ -2089,6 +2105,12 @@ const actions = {
     ui.editingWorkoutId = null; ui.startDate = null;
     startWorkout(tpl);
   },
+  'tip'(d) {
+    ui.tips[d.id] = !ui.tips[d.id];
+    if (ui.sheet && $('.sheet [data-id="' + d.id + '"]')) keepSheetScroll();
+    else { const y = window.scrollY; render(); window.scrollTo(0, y); }
+  },
+  'recov-all'() { ui.recovAll = !ui.recovAll; const y = window.scrollY; render(); window.scrollTo(0, y); },
   'picker-clear'() { ui.sheet.mf = null; ui.sheet.region = null; keepSheetScroll(); },
   'ex-replace'() {
     const loc = locateWE(ui.sheet.weId); if (!loc) return;
@@ -2282,7 +2304,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('toggle', e => {
   const t = e.target; if (!t || !t.dataset || !t.dataset.tog) return;
-  if (t.dataset.tog === 'recov') ui.recovOpen = t.open;
+  if (t.dataset.tog === 'mrows') ui.mrowsOpen = t.open;
   if (t.dataset.tog === 'pick-map' && ui.sheet) ui.sheet.mapOpen = t.open;
 }, true);
 document.addEventListener('focusin', e => { if (e.target.classList && e.target.classList.contains('num')) { try { e.target.select(); } catch (x) { } } });
