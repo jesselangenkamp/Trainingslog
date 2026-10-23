@@ -251,6 +251,37 @@ figure.bm figcaption { display: grid; text-align: center; font-size: 12px; font-
 .pick-group h4 { display: flex; align-items: center; }
 .muscle-rows > div { min-height: 40px; }
 .muscle-rows > div > span { display: flex; align-items: center; min-width: 0; }
+.body-map.tap .mz:not(.bone) { cursor: pointer; }
+.body-map.tap .mz:not(.bone):hover { fill: var(--m-1); }
+.body-map.tap .mz.l3:hover { fill: var(--m-3); }
+.pick-map { background: var(--soft); border-radius: 16px; padding: 4px 12px 10px; }
+.pick-map summary { cursor: pointer; font-weight: 700; min-height: 40px; display: flex; align-items: center; color: var(--accent-ink); }
+.pick-map figure.bm { max-width: 280px; margin: 0 auto; }
+.sel-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--accent-soft); color: var(--accent-soft-ink); border-radius: 12px; padding: 6px 6px 6px 12px; font-size: 14px; position: sticky; top: -10px; z-index: 2; }
+.sel-bar .btn { min-height: 36px; background: var(--card); color: var(--accent-ink); }
+.ex-actions.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.pin-note { display: flex; gap: 6px; align-items: flex-start; font-size: 14px; margin-top: 6px; color: var(--accent-soft-ink); background: var(--accent-soft); border-radius: 10px; padding: 6px 10px; }
+.pin-note svg { flex: none; margin-top: 2px; }
+.note textarea { margin-top: 4px; font-weight: 400; color: var(--ink); }
+.hist-row { background: var(--soft); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.plate-viz { display: flex; align-items: center; gap: 3px; min-height: 120px; overflow-x: auto; padding: 4px 0; }
+.plate-viz .sleeve { width: 34px; height: 12px; background: var(--m-base); border-radius: 3px; flex: none; }
+.plate-viz .plate { width: 26px; flex: none; border-radius: 5px; background: var(--dark); color: var(--on-dark); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; }
+.plate-viz .p25 { background: var(--accent); color: var(--on-accent); } .plate-viz .p20 { background: #2F5DA8; color: #fff; }
+.plate-viz .p15 { background: #B7891B; color: #fff; } .plate-viz .p10 { background: #3E7A4C; color: #fff; }
+.plate-viz .p5, .plate-viz .p2_5, .plate-viz .p1_25 { background: var(--chip); color: var(--ink); width: 20px; }
+.chip-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: -6px; }
+.prog-entry { border: 2px solid var(--accent-dash); }
+.prog-day { border-top: 1px solid var(--chip); padding-top: 6px; }
+.prog-day summary { cursor: pointer; min-height: 40px; display: flex; align-items: center; gap: 4px; }
+.prog-day .rows > div { min-height: 40px; font-size: 14px; }
+.nowrap { white-space: nowrap; flex: none; }
+.vol-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 16px; font-size: 14px; }
+.vol-grid > div { display: flex; justify-content: space-between; border-bottom: 1px solid var(--chip); padding: 6px 0; }
+.recov summary { cursor: pointer; min-height: 32px; display: flex; align-items: center; gap: 4px; }
+.recov-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 14px; font-size: 13.5px; margin-top: 8px; line-height: 1.25; }
+.recov-grid > div { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 30px; border-bottom: 1px solid var(--chip); }
+.recov-grid > div > span:first-child { display: flex; align-items: center; min-width: 0; }
 /* Grafiek */
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
 .chart .grid { stroke: var(--chip); stroke-width: 1; }
@@ -372,6 +403,7 @@ const ICON = {
   progress: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>',
   history: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>',
   schemas: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h9"/></svg>',
+  pin: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l-1 6 4 4H6l4-4z"/><path d="M12 14v6"/></svg>',
   info: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.6" r="0.6" fill="currentColor"/></svg>',
   star: '<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg>'
 };
@@ -397,6 +429,35 @@ const R_NAME = {}, R_GROUP = {};
 REGIONS.forEach(([id, n, g]) => { R_NAME[id] = n; R_GROUP[id] = g; });
 const LEVEL_NAME = { 3: 'Hoofdspier', 2: 'Werkt sterk mee', 1: 'Helpt mee' };
 const LEVEL_WEIGHT = { 3: 1, 2: 0.5, 1: 0.25 };
+/* Filters per spier (in de picker en het hersteloverzicht) */
+const MUSCLE_FILTERS = [
+  ['borst', 'Borst', ['chest_upper', 'chest_mid', 'chest_lower']], ['voor-schouder', 'Voorkant schouder', ['delt_front']],
+  ['zij-schouder', 'Zijkant schouder', ['delt_side']], ['achter-schouder', 'Achterkant schouder', ['delt_rear', 'rotator']],
+  ['trapezius', 'Trapezius', ['traps_upper']], ['lats', 'Lats', ['lats']], ['midden-rug', 'Midden rug', ['traps_mid', 'traps_lower']],
+  ['onderrug', 'Onderrug', ['lowerback']], ['biceps', 'Biceps', ['biceps', 'brachialis']], ['triceps', 'Triceps', ['triceps_long', 'triceps_lat']],
+  ['onderarmen', 'Onderarmen', ['forearm_flex', 'forearm_ext']], ['buik', 'Buik', ['abs_upper', 'abs_lower']], ['schuine-buik', 'Schuine buik', ['obliques', 'serratus']],
+  ['bilspieren', 'Bilspieren', ['glute_max', 'glute_med', 'abductors']], ['quadriceps', 'Quadriceps', ['quads_rf', 'quads_vl', 'quads_vm']],
+  ['hamstrings', 'Hamstrings', ['hamstrings_bf', 'hamstrings_st']], ['adductoren', 'Adductoren', ['adductors']], ['kuiten', 'Kuiten', ['calves_gastro', 'calves_soleus', 'tibialis']]
+];
+const MF = {}; MUSCLE_FILTERS.forEach(([k, l, r]) => { MF[k] = { label: l, regions: r }; });
+/* Vergevingsgezind zoeken: hoofdletters, accenten, leestekens en enkelvoud/meervoud maken niet uit */
+const normWords = t => String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean)
+  .map(w => w.length > 4 && /(es|en)$/.test(w) ? w.slice(0, -2) : w.length > 3 && /s$/.test(w) ? w.slice(0, -1) : w);
+const searchHay = new Map();
+function hayFor(e) {
+  const key = e.id + '|' + e.name + '|' + (e.updatedAt || '');
+  let h = searchHay.get(key);
+  if (!h) {
+    const slug = String(e.id).startsWith('lib-') ? e.id.slice(4) : '';
+    const act = exAct(e);
+    const regs = Object.keys(act).filter(r => act[r] >= 2).map(r => R_NAME[r] + ' ' + (MUSCLE_FILTERS.find(f => f[2].includes(r)) || ['', ''])[1]).join(' ');
+    h = ' ' + normWords([e.name, ALIASES[slug] || '', EQUIP[e.equipment] || '', e.muscle, regs].join(' ')).join(' ');
+    searchHay.set(key, h);
+  }
+  return h;
+}
+const matchQuery = (e, q) => { const toks = normWords(q); if (!toks.length) return true; const h = hayFor(e); return toks.every(t => h.includes(t)); };
+const actLevelIn = (e, regions) => Math.max(0, ...regions.map(r => exAct(e)[r] || 0));
 const GROUP_ACT = {
   Borst: { chest_mid: 3, chest_upper: 2, chest_lower: 2, delt_front: 1, triceps_lat: 1 },
   Rug: { lats: 3, traps_mid: 2, biceps: 1, delt_rear: 1 },
@@ -407,10 +468,10 @@ const GROUP_ACT = {
 };
 const EX_ACT = {
   'bankdrukken': [{ chest_mid: 3, chest_lower: 2, chest_upper: 2, delt_front: 2, triceps_lat: 2, triceps_long: 1 }, 'Vlak bankdrukken traint vooral het middelste deel van je borst. De voorkant van je schouders en je triceps duwen mee.'],
-  'schuin-bankdrukken': [{ chest_upper: 3, chest_mid: 2, delt_front: 3, triceps_lat: 2, triceps_long: 1 }, 'Door de schuine bank (30 tot 45 graden) verschuift de nadruk naar de bovenkant van je borst. Je voorste schouder werkt flink mee.'],
+  'schuin-bankdrukken': [{ chest_upper: 3, chest_mid: 2, delt_front: 2, triceps_lat: 2, triceps_long: 1 }, 'Op een schuine bank van ongeveer 30 graden werkt de bovenkant van je borst het hardst. Bij een steilere bank (boven 45 graden) neemt je voorste schouder steeds meer over.'],
   'decline-bankdrukken': [{ chest_lower: 3, chest_mid: 2, triceps_lat: 2, triceps_long: 1, delt_front: 1 }, 'Met je hoofd lager dan je heupen duw je in de lijn van de onderste borstvezels. Je schouders worden minder belast dan bij vlak of schuin drukken.'],
   'db-bankdrukken': [{ chest_mid: 3, chest_upper: 2, chest_lower: 2, delt_front: 2, triceps_lat: 2 }, 'Zoals vlak bankdrukken, maar met meer bewegingsruimte onderin. Elke arm werkt apart, dus verschillen tussen links en rechts zie je sneller.'],
-  'db-schuin-drukken': [{ chest_upper: 3, chest_mid: 2, delt_front: 3, triceps_lat: 1 }, 'Schuin drukken met dumbbells richt zich op de bovenkant van je borst, met veel hulp van je voorste schouder.'],
+  'db-schuin-drukken': [{ chest_upper: 3, chest_mid: 2, delt_front: 2, triceps_lat: 1 }, 'Schuin drukken met dumbbells richt zich op de bovenkant van je borst, met veel hulp van je voorste schouder.'],
   'db-flyes': [{ chest_mid: 3, chest_upper: 2, chest_lower: 2, delt_front: 1, biceps: 1 }, 'Flyes isoleren je borst: je armen blijven licht gebogen en je triceps doen bijna niets. De rek onderin is het zwaarste moment.'],
   'cable-fly-hl': [{ chest_lower: 3, chest_mid: 2, delt_front: 1, serratus: 1 }, 'Je trekt van hoog naar laag, in dezelfde richting als de onderste borstvezels lopen. Daardoor werkt vooral de onderkant van je borst. Breng je handen samen ter hoogte van je navel.'],
   'cable-flyes': [{ chest_mid: 3, chest_upper: 2, chest_lower: 2, delt_front: 1 }, 'Met de kabels op schouderhoogte trek je horizontaal naar elkaar toe. Dat traint vooral het middelste deel van je borst.'],
@@ -429,18 +490,18 @@ const EX_ACT = {
   'face-pulls': [{ delt_rear: 3, rotator: 3, traps_mid: 2, traps_upper: 1 }, 'Face pulls trainen de achterkant van je schouders en de rotator cuff. Goed voor een gezonde schouderhouding.'],
   'pullover': [{ lats: 3, chest_mid: 2, chest_lower: 2, triceps_long: 2, serratus: 2 }, 'Een pullover rekt en traint je lats en het onderste deel van je borst.'],
   'back-extension': [{ lowerback: 3, glute_max: 2, hamstrings_bf: 1, hamstrings_st: 1 }, 'Traint de spieren langs je wervelkolom. Maak je je rug iets rond en span je je billen aan, dan verschuift de nadruk naar je bilspieren.'],
-  'squat': [{ quads_rf: 3, quads_vl: 3, quads_vm: 3, glute_max: 3, adductors: 2, lowerback: 2, hamstrings_bf: 1, hamstrings_st: 1, abs_upper: 1, abs_lower: 1, calves_soleus: 1 }, 'De squat traint vooral je quadriceps en bilspieren. Hoe dieper je zakt, hoe meer je bilspieren en adductoren meedoen.'],
-  'front-squat': [{ quads_rf: 3, quads_vl: 3, quads_vm: 3, glute_max: 2, abs_upper: 2, abs_lower: 2, traps_upper: 1, lowerback: 1 }, 'Met de halter voor je blijft je romp rechter. Daardoor werken je quadriceps nog meer en je onderrug minder.'],
-  'leg-press': [{ quads_vl: 3, quads_vm: 3, quads_rf: 2, glute_max: 2, adductors: 2, hamstrings_st: 1 }, 'Hoe hoger je voeten op het plateau, hoe meer bilspieren en hamstrings. Lager en smaller geeft meer quadriceps.'],
+  'squat': [{ quads_rf: 1, quads_vl: 3, quads_vm: 3, glute_max: 3, adductors: 2, lowerback: 2, hamstrings_bf: 1, hamstrings_st: 1, abs_upper: 1, abs_lower: 1, calves_soleus: 1 }, 'De squat traint vooral je quadriceps (behalve de rechte dijspier, die groeit er nauwelijks van) en je bilspieren. Diep squatten gaf in onderzoek duidelijk meer groei van bilspieren en adductoren dan een halve squat.'],
+  'front-squat': [{ quads_rf: 1, quads_vl: 3, quads_vm: 3, glute_max: 2, abs_upper: 2, abs_lower: 2, traps_upper: 1, lowerback: 1 }, 'Met de halter voor je blijft je romp rechter. Daardoor werken je quadriceps nog meer en je onderrug minder.'],
+  'leg-press': [{ quads_vl: 3, quads_vm: 3, quads_rf: 1, glute_max: 2, adductors: 2, hamstrings_st: 1 }, 'Hoe hoger je voeten op het plateau, hoe meer bilspieren en hamstrings. Lager en smaller geeft meer quadriceps.'],
   'rdl': [{ hamstrings_bf: 3, hamstrings_st: 3, glute_max: 3, lowerback: 2, adductors: 2, forearm_flex: 1 }, 'De Roemeense deadlift rekt je hamstrings onder spanning. Je knieën blijven licht gebogen en je heupen gaan ver naar achteren.'],
-  'lunges': [{ quads_rf: 3, quads_vl: 3, quads_vm: 2, glute_max: 3, glute_med: 2, adductors: 2, hamstrings_bf: 1 }, 'Lunges trainen je benen per kant. Je middelste bilspier werkt mee voor je balans.'],
-  'bulgarian': [{ quads_vl: 3, quads_vm: 3, quads_rf: 2, glute_max: 3, glute_med: 2, adductors: 2 }, 'Met je achterste voet omhoog doet je voorste been bijna al het werk. Een langere pas geeft meer bilspieren.'],
-  'goblet-squat': [{ quads_rf: 3, quads_vl: 3, quads_vm: 3, glute_max: 2, adductors: 2, abs_upper: 1, abs_lower: 1 }, 'Een squat met een dumbbell voor je borst. Je blijft makkelijk rechtop en zakt diep.'],
-  'hack-squat': [{ quads_vl: 3, quads_vm: 3, quads_rf: 2, glute_max: 2 }, 'In de hack squat train je je quadriceps zwaar, terwijl je rug wordt ondersteund.'],
-  'leg-extension': [{ quads_rf: 3, quads_vl: 3, quads_vm: 3 }, 'Isoleert je quadriceps. Dit is een van de weinige oefeningen die ook de rechte dijspier goed traint.'],
-  'leg-curl': [{ hamstrings_bf: 3, hamstrings_st: 3, calves_gastro: 2 }, 'Isoleert je hamstrings vanuit de knie. Je kuit helpt mee met buigen.'],
+  'lunges': [{ quads_rf: 1, quads_vl: 3, quads_vm: 2, glute_max: 3, glute_med: 2, adductors: 2, hamstrings_bf: 1 }, 'Lunges trainen je benen per kant. Je middelste bilspier werkt mee voor je balans.'],
+  'bulgarian': [{ quads_vl: 3, quads_vm: 3, quads_rf: 1, glute_max: 3, glute_med: 2, adductors: 2 }, 'Met je achterste voet omhoog doet je voorste been bijna al het werk. Een langere pas geeft meer bilspieren.'],
+  'goblet-squat': [{ quads_rf: 1, quads_vl: 3, quads_vm: 3, glute_max: 2, adductors: 2, abs_upper: 1, abs_lower: 1 }, 'Een squat met een dumbbell voor je borst. Je blijft makkelijk rechtop en zakt diep.'],
+  'hack-squat': [{ quads_vl: 3, quads_vm: 3, quads_rf: 1, glute_max: 2 }, 'In de hack squat train je je quadriceps zwaar, terwijl je rug wordt ondersteund.'],
+  'leg-extension': [{ quads_rf: 3, quads_vl: 3, quads_vm: 3 }, 'Isoleert je quadriceps. Anders dan bij squats groeit hierbij ook de rechte dijspier (rectus femoris) goed.'],
+  'leg-curl': [{ hamstrings_bf: 3, hamstrings_st: 3, calves_gastro: 2 }, 'Liggend curlen isoleert je hamstrings vanuit de knie. Zittend curlen gaf in onderzoek meer groei, omdat de hamstrings dan ook bij je heup op rek staan.'],
   'hip-thrust': [{ glute_max: 3, glute_med: 2, hamstrings_bf: 2, hamstrings_st: 1, quads_rf: 1 }, 'De hip thrust traint vooral je grote bilspier, met de zwaarste spanning bovenin. Knijp je billen boven even samen.'],
-  'kuit-staand': [{ calves_gastro: 3, calves_soleus: 2 }, 'Met gestrekte knieën werkt vooral de gastrocnemius, het bovenste, zichtbare deel van je kuit.'],
+  'kuit-staand': [{ calves_gastro: 3, calves_soleus: 2 }, 'Met gestrekte knieën werkt vooral de gastrocnemius, het bovenste, zichtbare deel van je kuit. In onderzoek groeide die bij staand trainen veel meer dan bij zittend.'],
   'kuit-zittend': [{ calves_soleus: 3, calves_gastro: 1 }, 'Met gebogen knieën neemt de soleus het meeste werk over. Die ligt onder de gastrocnemius.'],
   'adductor': [{ adductors: 3 }, 'Traint de binnenkant van je dijen. Deze spieren helpen ook bij squats en lunges.'],
   'ohp': [{ delt_front: 3, delt_side: 2, triceps_lat: 2, triceps_long: 1, traps_upper: 2, chest_upper: 1, abs_upper: 1, abs_lower: 1 }, 'Staand drukken traint vooral de voorkant van je schouders. Je triceps strekken mee en je romp moet stevig blijven.'],
@@ -548,13 +609,15 @@ function bodySvg(states, opt) {
   const one = (d, cls) => `<g class="${cls}">${d}</g>`;
   const draw = (f, cls) => one(f.d, cls) + (f.m ? `<g class="${cls}" transform="matrix(-1 0 0 1 200 0)">${f.d}</g>` : '');
   const base = BODY_BASE.map(f => typeof f === 'string' ? one(f, 'base') : draw(f, 'base')).join('');
-  const fig = (list, dx) => `<g transform="translate(${dx} 0)">${base}${list.map(f => draw(f, 'mz' + (f.r ? ' ' + (states[f.r] || '') : ' bone'))).join('')}</g>`;
+  const tapAttr = f => opt.tap && f.r ? ` data-act="pick-region" data-r="${f.r}"` : '';
+  const drawT = (f, cls) => `<g class="${cls}"${tapAttr(f)}>${f.d}</g>` + (f.m ? `<g class="${cls}"${tapAttr(f)} transform="matrix(-1 0 0 1 200 0)">${f.d}</g>` : '');
+  const fig = (list, dx) => `<g transform="translate(${dx} 0)">${base}${list.map(f => drawT(f, 'mz' + (f.r ? ' ' + (states[f.r] || '') : ' bone'))).join('')}</g>`;
   const view = opt.view || 'both';
   const parts = view === 'front' ? [[BODY_FRONT, 'Voorkant']] : view === 'back' ? [[BODY_BACK, 'Achterkant']] : [[BODY_FRONT, 'Voorkant'], [BODY_BACK, 'Achterkant']];
   const y0 = opt.crop === 'lower' ? 236 : 2;
   const y1 = opt.crop === 'upper' ? 264 : 438;
   const aria = opt.label ? `role="img" aria-label="${String(opt.label).replace(/"/g, '&quot;')}"` : 'aria-hidden="true"';
-  const svg = `<svg class="body-map" viewBox="0 ${y0} ${parts.length * 210 - 10} ${y1 - y0}" ${aria}>${parts.map((p, i) => fig(p[0], i * 210)).join('')}</svg>`;
+  const svg = `<svg class="body-map${opt.tap ? ' tap' : ''}" viewBox="0 ${y0} ${parts.length * 210 - 10} ${y1 - y0}" ${aria}>${parts.map((p, i) => fig(p[0], i * 210)).join('')}</svg>`;
   if (!opt.caps) return svg;
   return `<figure class="bm">${svg}<figcaption style="grid-template-columns:repeat(${parts.length},minmax(0,1fr))">${parts.map(p => `<span>${p[1]}</span>`).join('')}</figcaption></figure>`;
 }
@@ -608,7 +671,7 @@ const LIBRARY = [
   ['leg-press', 'Leg press', 'Benen', 'machine'], ['rdl', 'Roemeense deadlift', 'Benen', 'barbell'],
   ['lunges', 'Lunges', 'Benen', 'dumbbell'], ['bulgarian', 'Bulgarian split squat', 'Benen', 'dumbbell'],
   ['goblet-squat', 'Goblet squat', 'Benen', 'dumbbell'], ['hack-squat', 'Hack squat', 'Benen', 'machine'],
-  ['leg-extension', 'Leg extension', 'Benen', 'machine'], ['leg-curl', 'Leg curl', 'Benen', 'machine'],
+  ['leg-extension', 'Leg extension', 'Benen', 'machine'], ['leg-curl', 'Leg curl liggend', 'Benen', 'machine'],
   ['hip-thrust', 'Hip thrust', 'Benen', 'barbell'], ['kuit-staand', 'Kuitheffen staand', 'Benen', 'machine'],
   ['kuit-zittend', 'Kuitheffen zittend', 'Benen', 'machine'], ['adductor', 'Adductor machine', 'Benen', 'machine'],
   ['ohp', 'Schouderdrukken (halter)', 'Schouders', 'barbell'], ['db-ohp', 'Schouderdrukken (dumbbell)', 'Schouders', 'dumbbell'],
@@ -624,6 +687,313 @@ const LIBRARY = [
   ['cable-crunch', 'Cable crunch', 'Core', 'cable'], ['leg-raise', 'Hanging leg raise', 'Core', 'bodyweight'],
   ['ab-wheel', 'Ab wheel', 'Core', 'bodyweight'], ['russian-twist', 'Russian twist', 'Core', 'dumbbell']
 ];
+
+/* Uitbreiding van de bibliotheek. Per regel: slug | naam | groep | soort | spieren (regio + niveau) | zoekwoorden (ook Engels) | uitleg */
+const EXTRA_EXERCISES = `
+smith-bankdrukken|Bankdrukken (Smith)|Borst|machine|chest_mid3 chest_lower2 chest_upper2 delt_front2 triceps_lat2|smith machine bench press|Bankdrukken in een vaste baan. Je hoeft minder te balanceren, dus je kunt veilig dicht bij falen trainen.
+smith-schuin|Schuin bankdrukken (Smith)|Borst|machine|chest_upper3 chest_mid2 delt_front2 triceps_lat2|smith incline press|De vaste baan op een bank van ongeveer 30 graden legt de nadruk op de bovenkant van je borst.
+smith-decline|Decline bankdrukken (Smith)|Borst|machine|chest_lower3 chest_mid2 triceps_lat2 delt_front1|smith decline press|Decline drukken in een vaste baan, voor de onderste borstvezels.
+paused-bench|Bankdrukken met pauze|Borst|barbell|chest_mid3 chest_lower2 chest_upper2 delt_front2 triceps_lat2|paused bench press pause|Je laat de halter een tel stil op je borst liggen. Zo gebruik je geen veerkracht en werkt je borst onderin harder.
+db-decline|Decline dumbbell drukken|Borst|dumbbell|chest_lower3 chest_mid2 triceps_lat2 delt_front1|decline dumbbell press|Met je hoofd lager dan je heupen druk je in de lijn van de onderste borstvezels.
+incline-db-fly|Schuine dumbbell flyes|Borst|dumbbell|chest_upper3 chest_mid2 delt_front2|incline dumbbell fly flyes|Flyes op een schuine bank geven veel rek op de bovenkant van je borst.
+incline-cable-fly|Cable fly op schuine bank|Borst|cable|chest_upper3 chest_mid2 delt_front2|incline cable fly bench|Liggend op een schuine bank tussen twee kabels houd je ook bovenin spanning op de bovenkant van je borst.
+incline-chest-press|Incline chest press (machine)|Borst|machine|chest_upper3 chest_mid2 delt_front2 triceps_lat2|incline machine press|Machinevariant van schuin drukken, voor de bovenkant van je borst.
+decline-chest-press|Decline chest press (machine)|Borst|machine|chest_lower3 chest_mid2 triceps_lat2|decline machine press|Een machine die schuin naar beneden duwt en zo de onderste borstvezels traint.
+hammer-chest-press|Plate-loaded chest press|Borst|machine|chest_mid3 chest_lower2 chest_upper2 delt_front2 triceps_lat2|hammer strength chest press iso lateral|Drukmachine met schijven, waarbij elke arm apart kan bewegen.
+cable-press|Cable chest press|Borst|cable|chest_mid3 delt_front2 triceps_lat2 abs_upper1|cable press standing|Staand drukken met twee kabels. Je romp moet stevig blijven.
+single-cable-fly|Eenarmige cable fly|Borst|cable|chest_mid3 chest_lower2 delt_front1 obliques1|single arm cable fly|Met één arm kun je verder over het midden trekken, voor een volledige samentrekking van je borst.
+seated-cable-fly|Zittende cable fly|Borst|cable|chest_mid3 chest_upper2 delt_front1|seated cable fly|Met je rug tegen een bank werk je stabieler en richt je je volledig op je borst.
+deficit-push-ups|Deficit push-ups|Borst|bodyweight|chest_mid3 chest_lower2 delt_front2 triceps_lat2|deficit pushup opdrukken|Met je handen op verhogingen zak je dieper, waardoor je borst meer op rek komt.
+incline-push-ups|Incline push-ups|Borst|bodyweight|chest_lower3 chest_mid2 triceps_lat2 delt_front1|incline pushup opdrukken|Met je handen op een bank zijn ze lichter dan gewone push-ups, met nadruk op de onderkant van je borst.
+decline-push-ups|Decline push-ups|Borst|bodyweight|chest_upper3 chest_mid2 delt_front2 triceps_lat2|decline pushup feet elevated opdrukken|Met je voeten omhoog verschuift de nadruk naar de bovenkant van je borst en je schouders.
+weighted-dips|Dips met gewicht|Borst|bodyweight|chest_lower3 triceps_lat3 triceps_long2 delt_front2|weighted dips|Dips met een gewichtsriem. Licht voorover leunen legt de nadruk op de onderkant van je borst.
+machine-dips|Dip machine|Borst|machine|chest_lower3 triceps_lat3 triceps_long2 delt_front1|seated dip machine assisted dips|Een machine voor de dipbeweging, makkelijk te doseren.
+landmine-press|Landmine press|Borst|barbell|chest_upper3 delt_front3 triceps_lat2 serratus1|landmine press|Schuin omhoog drukken met een halter in een hoekstuk. Prettig voor je schouders en goed voor de bovenkant van je borst.
+floor-press|Floor press|Borst|barbell|triceps_lat3 triceps_long2 chest_mid2 delt_front2|floor press|Bankdrukken op de grond. De kortere baan legt meer nadruk op je triceps.
+db-squeeze-press|Squeeze press|Borst|dumbbell|chest_mid3 triceps_lat2 delt_front1|squeeze press hex press|Je drukt de dumbbells tegen elkaar terwijl je drukt, zodat je borst de hele beweging aangespannen blijft.
+svend-press|Svend press|Borst|dumbbell|chest_mid3 chest_upper2 delt_front2|svend press plate press|Je knijpt een schijf tussen je handen en duwt hem voor je uit. Een lichte afsluiter voor je borst.
+sa-cable-lat-pulldown-cs|Eenarmige lat pulldown (borst tegen bank)|Rug|cable|lats3 traps_lower1 biceps1 delt_rear1|single arm cable lat pulldown chest supported high cable row to hip lat pull|Zet een bank rechtop bij de kabel, met je borst tegen de rugleuning, en trek met één hand van hoog naar je heup. Door de steun en de boog richting je heup werken vooral je lats, met weinig hulp van je onderrug.
+sa-lat-pulldown|Eenarmige lat pulldown (knielend)|Rug|cable|lats3 biceps1 traps_lower1|single arm lat pulldown kneeling|Per kant trekken geeft een grote bewegingsuitslag en veel rek op je lats bovenin.
+close-grip-pulldown|Lat pulldown smalle grip (V-greep)|Rug|cable|lats3 traps_mid2 biceps2 brachialis1|close grip v bar pulldown|Met een smalle, neutrale greep trek je je ellebogen langs je lichaam omlaag. Vooral je lats werken.
+wide-pulldown|Lat pulldown brede grip|Rug|cable|lats3 traps_lower2 delt_rear1 biceps1|wide grip pulldown|Brede bovenhandse greep. Een bovenhandse greep gaf in EMG-onderzoek meer lat-activiteit dan een onderhandse.
+underhand-pulldown|Lat pulldown onderhandse grip|Rug|cable|lats3 biceps2 brachialis1 traps_lower1|reverse grip supinated pulldown|Met je handpalmen naar je toe werken je biceps meer mee.
+machine-pulldown|Pulldown machine|Rug|machine|lats3 biceps1 traps_lower1|machine lat pulldown plate loaded|Een pulldown met een vaste baan, prettig om dicht bij falen te trainen.
+straight-arm-pulldown|Straight-arm pulldown|Rug|cable|lats3 triceps_long1 serratus1|straight arm pulldown|Met gestrekte armen trek je de kabel naar je bovenbenen. Je biceps doen bijna niets, dus het is een isolatie voor je lats.
+cable-pullover|Cable pullover (touw)|Rug|cable|lats3 serratus2 triceps_long1|rope pullover cable|Zoals een straight-arm pulldown, maar met een touw. Veel rek op je lats.
+machine-pullover|Pullover machine|Rug|machine|lats3 serratus2 triceps_long1|pullover machine|Een machine die de pullover-beweging nadoet, met spanning door de hele baan.
+chinups|Chin-ups|Rug|bodyweight|lats3 biceps3 brachialis2 traps_lower1|chin up chinups optrekken onderhands|Optrekken met een onderhandse greep. Je biceps werken hier sterk mee.
+neutral-pullups|Optrekken neutrale grip|Rug|bodyweight|lats3 biceps2 brachialis2 forearm_ext1|neutral grip pull up pullups|Met je handpalmen naar elkaar toe. Voor veel mensen het prettigst voor de schouders.
+weighted-pullups|Optrekken met gewicht|Rug|bodyweight|lats3 biceps2 brachialis2 forearm_flex2 traps_lower1|weighted pull up pullups|Wordt gewoon optrekken te makkelijk, voeg dan gewicht toe met een riem.
+assisted-pullups|Optrekken met ondersteuning|Rug|machine|lats3 biceps2 traps_lower1|assisted pull up machine band pullups|Met een tegengewicht of elastiek kun je optrekken doen, ook als je er nog geen tien kunt.
+inverted-row|Inverted row|Rug|bodyweight|traps_mid3 lats2 delt_rear2 biceps2|inverted row australian pull up|Hangend onder een stang trek je je borst omhoog. Goed voor het midden van je rug.
+pendlay-row|Pendlay row|Rug|barbell|lats3 traps_mid3 delt_rear2 lowerback2 biceps1|pendlay row|Elke herhaling start met de halter op de grond, met je romp bijna horizontaal.
+yates-row|Barbell row onderhands|Rug|barbell|lats3 traps_mid2 biceps2 lowerback1|yates row underhand row|Iets rechter roeien met een onderhandse greep, richting je navel. Je lats werken veel.
+seal-row|Seal row|Rug|barbell|traps_mid3 lats3 delt_rear2 biceps1|seal row|Liggend op je buik op een hoge bank roei je zonder je onderrug te belasten.
+chest-supported-db-row|Dumbbell row op schuine bank|Rug|dumbbell|traps_mid3 lats2 delt_rear2 biceps1|chest supported dumbbell row incline row|Met je borst tegen een schuine bank rust je onderrug en richt je je volledig op je rug.
+helms-row|Helms row|Rug|dumbbell|traps_mid3 delt_rear2 lats2 biceps1|helms row|Staand, met je borst net tegen een schuine bank, roei je zonder te kunnen valsspelen.
+meadows-row|Meadows row|Rug|barbell|lats3 traps_mid2 delt_rear2 biceps1|meadows row landmine row|Eenarmig roeien aan het uiteinde van een halter in een hoekstuk. Veel rek op je lats.
+chest-supported-t-bar|T-bar row (borst gesteund)|Rug|machine|traps_mid3 lats3 delt_rear2 biceps1|chest supported t bar row|Met je borst tegen het kussen train je je rug zonder je onderrug te belasten.
+machine-row|Row machine (borst gesteund)|Rug|machine|traps_mid3 lats2 delt_rear2 biceps1|chest supported machine row seated row machine|Met je borst tegen het kussen train je het midden van je rug, zonder belasting voor je onderrug.
+high-row-machine|High row machine|Rug|machine|lats3 traps_mid2 delt_rear1 biceps1|iso lateral high row|Je trekt schuin van boven naar beneden. Een mix van pulldown en roeien.
+low-row-machine|Low row machine|Rug|machine|lats3 traps_mid2 biceps1|iso lateral low row|Je trekt van laag naar je heup, wat vooral je lats traint.
+sa-cable-row|Eenarmige cable row|Rug|cable|lats3 traps_mid2 delt_rear1 biceps1 obliques1|single arm cable row|Per kant roeien laat je verder strekken en iets draaien, voor meer bewegingsuitslag.
+wide-cable-row|Seated cable row brede grip|Rug|cable|traps_mid3 delt_rear3 lats1 biceps1|wide grip cable row|Met een brede greep en je ellebogen naar buiten werken vooral het midden van je rug en je achterste schouders.
+gorilla-row|Gorilla row|Rug|dumbbell|lats3 traps_mid2 biceps1 lowerback1 obliques1|gorilla row kettlebell row|Voorovergebogen roei je afwisselend links en rechts met twee kettlebells of dumbbells.
+kroc-row|Kroc row|Rug|dumbbell|lats3 traps_mid2 traps_upper2 biceps2 forearm_flex2|kroc row heavy dumbbell row|Een zware eenarmige row voor veel herhalingen, iets losser uitgevoerd.
+rack-pull|Rack pull|Rug|barbell|traps_upper3 lowerback3 glute_max2 traps_mid2 forearm_flex2 lats1|rack pull|Een deadlift vanaf kniehoogte. Zwaar voor je trapezius en onderrug.
+45-back-ext|Back extension 45 graden (met gewicht)|Rug|bodyweight|lowerback3 glute_max2 hamstrings_bf2 hamstrings_st2|45 degree hyperextension weighted back extension|Met een gewicht tegen je borst wordt de back extension zwaarder.
+reverse-hyper|Reverse hyperextension|Rug|machine|glute_max3 lowerback2 hamstrings_bf2 hamstrings_st2|reverse hyper|Je bovenlichaam ligt stil en je zwaait je benen omhoog. Traint je billen en onderrug.
+bb-shrug|Shrugs (halter)|Rug|barbell|traps_upper3 forearm_flex2|barbell shrug|Met een halter kun je zwaar trekken voor je bovenste trapezius.
+prone-y-raise|Y-raises|Rug|dumbbell|traps_lower3 delt_rear2 delt_side1 rotator1|y raise prone incline|Op je buik op een schuine bank hef je de dumbbells in een Y-vorm. Traint je onderste trapezius.
+band-pull-apart|Band pull-aparts|Rug|bodyweight|delt_rear3 traps_mid2 rotator2|band pull apart elastiek|Met een elastiek trek je je handen uit elkaar. Licht en goed voor je schouderhouding.
+trap-bar-deadlift|Trap bar deadlift|Benen|barbell|glute_max3 quads_vl2 quads_vm2 hamstrings_bf2 hamstrings_st2 lowerback2 traps_upper2 forearm_flex2|trap bar hex bar deadlift|Met een zeshoekige stang sta je midden in het gewicht en buigen je knieën meer dan bij een gewone deadlift.
+sumo-deadlift|Sumo deadlift|Benen|barbell|glute_max3 adductors3 quads_vm2 hamstrings_st2 lowerback2 traps_upper1 forearm_flex2|sumo deadlift|Met een brede stand werken je adductoren en bilspieren meer, en je onderrug iets minder.
+good-morning|Good morning|Benen|barbell|hamstrings_bf3 hamstrings_st3 lowerback3 glute_max2|good morning|Met de halter op je rug buig je voorover vanuit je heupen. Veel rek op je hamstrings.
+seated-db-ohp|Schouderdrukken zittend (dumbbell)|Schouders|dumbbell|delt_front3 delt_side2 triceps_lat2 chest_upper1|seated dumbbell shoulder press overhead press|Met rugsteun kun je zwaarder drukken en blijft je romp stil.
+seated-bb-ohp|Schouderdrukken zittend (halter)|Schouders|barbell|delt_front3 delt_side2 triceps_lat2 traps_upper1|seated barbell overhead press military press|Zittend drukken met een halter. Je romp hoeft minder te stabiliseren dan staand.
+smith-ohp|Schouderdrukken (Smith)|Schouders|machine|delt_front3 delt_side2 triceps_lat2|smith machine shoulder press overhead press|Schouderdrukken in een vaste baan.
+push-press|Push press|Schouders|barbell|delt_front3 delt_side2 triceps_lat2 traps_upper2 quads_vl1 glute_max1|push press|Met een kleine kniebuiging help je het gewicht omhoog, zodat je zwaarder kunt gaan dan bij strikt drukken.
+handstand-pushup|Handstand push-ups|Schouders|bodyweight|delt_front3 triceps_lat2 delt_side1 traps_upper1|handstand push up hspu|In handstand tegen de muur drukken. Zwaar voor je schouders en triceps.
+pike-pushup|Pike push-ups|Schouders|bodyweight|delt_front3 triceps_lat2 chest_upper1|pike push up|Met je heupen hoog richt een push-up zich op je schouders. Een opstap naar handstand push-ups.
+machine-lateral|Zijwaartse heffing machine|Schouders|machine|delt_side3 traps_upper1|lateral raise machine|Een machine die de zijwaartse heffing nadoet, met spanning door de hele beweging.
+seated-lateral|Zijwaartse heffing zittend|Schouders|dumbbell|delt_side3 traps_upper1|seated lateral raise|Zittend kun je minder zwaaien, dus je zijkant schouder doet het werk.
+lean-away-lateral|Zijwaartse heffing leunend|Schouders|dumbbell|delt_side3 traps_upper1|lean away lateral raise|Je houdt je ergens aan vast en leunt weg, zodat je ook onderin spanning hebt.
+incline-lateral|Zijwaartse heffing liggend (schuine bank)|Schouders|dumbbell|delt_side3 delt_rear1|incline side lying lateral raise|Op je zij op een schuine bank begint de beweging met de schouder op rek.
+cable-lateral-behind|Zijwaartse heffing achter de rug (kabel)|Schouders|cable|delt_side3 delt_rear1|behind the back cable lateral raise|Met de kabel achter je rug begint de beweging met meer rek op je zijkant schouder.
+cable-y-raise|Cable Y-raise|Schouders|cable|delt_side3 traps_lower2 traps_upper1|cable y raise|Met twee gekruiste kabels hef je je armen schuin omhoog in een Y-vorm.
+lu-raise|Lu raises|Schouders|dumbbell|delt_side3 delt_front2 traps_upper2|lu raise|Met lichte dumbbells hef je je armen zijwaarts helemaal tot boven je hoofd.
+upright-row|Upright row|Schouders|barbell|delt_side3 traps_upper3 delt_front1 biceps1|upright row|Met een brede greep trek je de halter tot borsthoogte. Traint je zijkant schouder en trapezius.
+cable-upright-row|Upright row (kabel)|Schouders|cable|delt_side3 traps_upper2|cable upright row|Upright row met een kabel, met gelijkmatige spanning.
+cable-front-raise|Voorwaartse heffing (kabel)|Schouders|cable|delt_front3 chest_upper1|cable front raise|Met een kabel houd je ook onderin spanning op je voorste schouder.
+plate-front-raise|Voorwaartse heffing met schijf|Schouders|barbell|delt_front3 chest_upper1 traps_upper1|plate front raise|Je houdt een schijf met twee handen vast en heft hem tot ooghoogte.
+reverse-pec-deck|Reverse pec deck|Schouders|machine|delt_rear3 traps_mid2 rotator1|reverse fly machine rear delt|Achterstevoren in de pec deck train je de achterkant van je schouders.
+cable-rear-delt-fly|Rear delt fly (kabel)|Schouders|cable|delt_rear3 traps_mid1 rotator1|cable reverse fly crossover rear delt|Met gekruiste kabels trek je je armen uit elkaar voor je achterste schouders.
+seated-rear-delt-fly|Rear delt fly zittend voorover|Schouders|dumbbell|delt_rear3 traps_mid2|seated bent over reverse fly|Voorovergebogen op het randje van een bank hef je de dumbbells zijwaarts.
+rear-delt-row|Rear delt row|Schouders|dumbbell|delt_rear3 traps_mid2 biceps1|rear delt row|Roeien met je ellebogen wijd naar buiten verschuift het werk naar je achterste schouders.
+external-rotation|Externe rotatie (kabel)|Schouders|cable|rotator3 delt_rear1|cable external rotation|Met je elleboog tegen je zij draai je je onderarm naar buiten. Traint de rotator cuff.
+db-external-rotation|Externe rotatie liggend (dumbbell)|Schouders|dumbbell|rotator3 delt_rear1|side lying external rotation|Op je zij liggend draai je de dumbbell omhoog. Licht gewicht en rustig bewegen.
+incline-curl|Incline dumbbell curl|Armen|dumbbell|biceps3 brachialis1|incline curl|Op een schuine bank hangen je armen achter je lichaam, waardoor je biceps op rek staan. Trainen met de spier in een verlengde positie lijkt extra goed voor spiergroei.
+bayesian-curl|Bayesian curl (kabel)|Armen|cable|biceps3 brachialis1|bayesian cable curl behind body|Met je rug naar de kabel en je arm achter je lichaam train je je biceps op rek, met spanning door de hele beweging.
+spider-curl|Spider curl|Armen|dumbbell|biceps3 brachialis2|spider curl|Op je buik op een schuine bank. Je biceps werken vooral bovenin de beweging.
+concentration-curl|Concentratie curl|Armen|dumbbell|biceps3 brachialis1|concentration curl|Zittend, met je elleboog tegen je bovenbeen, curl je één arm tegelijk zonder te zwaaien.
+ez-curl|EZ-bar curl|Armen|barbell|biceps3 brachialis2 forearm_flex1|ez bar curl|Met de gebogen stang staan je polsen prettiger dan bij een rechte halter.
+reverse-curl|Reverse curl|Armen|barbell|brachialis3 forearm_ext3 biceps1|reverse grip curl|Met een bovenhandse greep werken vooral de brachialis en de onderarmstrekkers.
+cross-body-hammer|Cross-body hamer curl|Armen|dumbbell|brachialis3 forearm_ext2 biceps2|cross body hammer curl|Je curlt de dumbbell schuin voor je lichaam langs, met een neutrale greep.
+incline-hammer-curl|Incline hamer curl|Armen|dumbbell|brachialis3 forearm_ext2 biceps2|incline hammer curl|Hamer curls op een schuine bank, met je armen op rek.
+rope-hammer|Hamer curl (touw)|Armen|cable|brachialis3 forearm_ext2 biceps2|rope hammer curl cable|Met een touw aan de kabel houd je de hele beweging spanning.
+machine-curl|Biceps curl machine|Armen|machine|biceps3 brachialis2|machine bicep curl|Een curl in een vaste baan, makkelijk om tot falen te gaan.
+db-preacher|Preacher curl (dumbbell)|Armen|dumbbell|biceps3 brachialis2|dumbbell preacher curl|Op de preacher-bank met één dumbbell. Onderin staat je biceps op rek; in onderzoek gaven herhalingen in dat deel de meeste groei.
+ez-preacher|Preacher curl (EZ-bar)|Armen|barbell|biceps3 brachialis2|ez bar preacher curl|De preacher curl met een gebogen stang.
+cable-preacher|Preacher curl (kabel)|Armen|cable|biceps3 brachialis2|cable preacher curl|Op de preacher-bank met een kabel, zodat je ook bovenin spanning houdt.
+drag-curl|Drag curl|Armen|barbell|biceps3 brachialis1|drag curl|Je schuift de halter langs je lichaam omhoog, met je ellebogen naar achteren.
+zottman|Zottman curl|Armen|dumbbell|brachialis3 biceps2 forearm_ext2|zottman curl|Omhoog met een onderhandse greep, omlaag met een bovenhandse. Zo train je biceps en onderarmen.
+waiter-curl|Waiter curl|Armen|dumbbell|biceps3 brachialis1|waiter curl|Je houdt één dumbbell als een dienblad vast. Veel spanning bovenin.
+cable-curl-single|Eenarmige cable curl|Armen|cable|biceps3 brachialis1|single arm cable curl|Per arm curlen aan de kabel, zodat je beide kanten even hard traint.
+high-cable-curl|High cable curl|Armen|cable|biceps3 brachialis1|overhead cable curl double biceps|Met je armen zijwaarts op schouderhoogte curl je de kabels naar je hoofd.
+rope-pushdown|Triceps pushdown (touw)|Armen|cable|triceps_lat3 triceps_long2|rope pushdown|Met een touw kun je je handen onderin uit elkaar trekken, voor een volledige samentrekking.
+sa-pushdown|Eenarmige pushdown|Armen|cable|triceps_lat3 triceps_long2|single arm pushdown reverse grip|Per arm drukken aan de kabel, ook met een onderhandse greep.
+cross-body-extension|Cross-body cable extension|Armen|cable|triceps_lat3 triceps_long2|cross body triceps extension|Je trekt de kabel schuin voor je lichaam langs naar buiten.
+oh-db-ext|Overhead triceps extension (dumbbell)|Armen|dumbbell|triceps_long3 triceps_lat2|overhead dumbbell extension french press|Met de dumbbell boven je hoofd staat de lange kop op rek. In onderzoek groeide de triceps hierbij meer dan bij pushdowns.
+oh-rope|Overhead triceps extension (touw)|Armen|cable|triceps_long3 triceps_lat2|overhead rope extension|Met je rug naar de kabel strek je het touw boven je hoofd. Veel rek op de lange kop.
+sa-oh-cable|Eenarmige overhead extension (kabel)|Armen|cable|triceps_long3 triceps_lat2|single arm overhead cable extension|Per arm boven je hoofd strekken, met de lange kop op rek.
+oh-ez|Overhead extension (EZ-bar)|Armen|barbell|triceps_long3 triceps_lat2|overhead ez bar extension french press|Met een EZ-bar boven je hoofd strekken, zittend of staand.
+ez-skull|Skull crushers (EZ-bar)|Armen|barbell|triceps_long3 triceps_lat2|ez bar skull crusher lying triceps extension skullcrusher|Als skull crushers, maar met de gebogen stang voor prettigere polsen.
+db-skull|Skull crushers (dumbbell)|Armen|dumbbell|triceps_long3 triceps_lat2|dumbbell skull crusher lying extension skullcrusher|Liggende triceps-extensie met twee dumbbells.
+jm-press|JM press|Armen|barbell|triceps_lat3 triceps_long2 chest_mid1|jm press|Een mix van close-grip bankdrukken en skull crushers. Zwaar voor je triceps.
+tate-press|Tate press|Armen|dumbbell|triceps_lat3 triceps_long2|tate press|Liggend laat je de dumbbells met je ellebogen naar buiten naar je borst zakken.
+kickback|Triceps kickback|Armen|dumbbell|triceps_lat3 triceps_long2|kickback|Voorovergebogen strek je je arm naar achteren. Vooral bovenin is het zwaar.
+cable-kickback|Triceps kickback (kabel)|Armen|cable|triceps_lat3 triceps_long2|cable kickback|Met een kabel houd je ook onderin spanning op je triceps.
+triceps-machine|Triceps extension machine|Armen|machine|triceps_lat3 triceps_long2|triceps machine extension|Een machine voor triceps-extensies in een vaste baan.
+bench-dips|Bench dips|Armen|bodyweight|triceps_lat3 triceps_long2 delt_front2 chest_lower1|bench dip|Met je handen op een bank zak je achter je lichaam omlaag.
+diamond-pushups|Diamond push-ups|Armen|bodyweight|triceps_lat3 chest_mid2 delt_front1|diamond push up close grip push up opdrukken|Push-ups met je handen dicht bij elkaar. Je triceps nemen veel van het werk over.
+close-grip-smith|Close-grip bankdrukken (Smith)|Armen|machine|triceps_lat3 triceps_long2 chest_mid2 delt_front1|close grip smith press|Smalle bankdruk in een vaste baan, voor je triceps.
+wrist-curl|Pols curl|Armen|dumbbell|forearm_flex3|wrist curl|Met je onderarmen op een bank buig je je polsen omhoog. Traint de buigers van je onderarm.
+reverse-wrist-curl|Omgekeerde pols curl|Armen|dumbbell|forearm_ext3|reverse wrist curl|Met bovenhandse greep strek je je polsen. Traint de strekkers van je onderarm.
+farmers-walk|Farmer's walk|Armen|dumbbell|forearm_flex3 traps_upper2 obliques2 abs_upper1 abs_lower1|farmers carry walk|Lopen met zware dumbbells. Traint je grip, trapezius en romp. Vul de afstand in meters in bij herhalingen.
+dead-hang|Dead hang|Armen|bodyweight|forearm_flex3 lats1|dead hang hangen|Aan een stang hangen traint je grip. Vul het aantal seconden in bij herhalingen.
+plank|Plank|Core|bodyweight|abs_upper3 abs_lower3 obliques2|plank|Op je onderarmen en tenen houd je je lichaam recht. Vul het aantal seconden in bij herhalingen.
+side-plank|Side plank|Core|bodyweight|obliques3 abs_lower1 glute_med1|side plank zijplank|Op je zij houd je je heupen omhoog. Vul het aantal seconden in bij herhalingen.
+crunch|Crunch|Core|bodyweight|abs_upper3 abs_lower1|crunch|Je rolt je bovenlichaam op vanaf de grond. Traint vooral je bovenste buikspieren.
+weighted-crunch|Crunch met gewicht|Core|dumbbell|abs_upper3 abs_lower1|weighted crunch|Een crunch met een schijf of dumbbell op je borst.
+machine-crunch|Crunch machine|Core|machine|abs_upper3 abs_lower2|ab crunch machine|Een crunch in een vaste baan, makkelijk zwaarder te maken.
+decline-situp|Decline sit-up|Core|bodyweight|abs_upper3 abs_lower2 obliques1|decline sit up|Op een schuine bank met je voeten vast kom je overeind.
+bicycle-crunch|Bicycle crunch|Core|bodyweight|obliques3 abs_upper2 abs_lower2|bicycle crunch|Je brengt afwisselend je elleboog naar je tegenovergestelde knie.
+v-up|V-ups|Core|bodyweight|abs_upper3 abs_lower3|v up|Je heft tegelijk je benen en je bovenlichaam, zodat je lichaam een V vormt.
+captains-chair|Knee raise (captain's chair)|Core|bodyweight|abs_lower3 abs_upper1 obliques1|captains chair knee raise|Met je onderarmen op de steunen trek je je knieën omhoog.
+hanging-knee-raise|Hanging knee raise|Core|bodyweight|abs_lower3 abs_upper1 forearm_flex1|hanging knee raise|Hangend aan een stang trek je je knieën op. Een lichtere variant van leg raises.
+toes-to-bar|Toes to bar|Core|bodyweight|abs_lower3 abs_upper2 lats1 forearm_flex1|toes to bar|Hangend aan een stang breng je je voeten helemaal naar de stang.
+reverse-crunch|Reverse crunch|Core|bodyweight|abs_lower3 abs_upper1|reverse crunch|Op je rug rol je je bekken op richting je borst.
+lying-leg-raise|Liggende beenheffingen|Core|bodyweight|abs_lower3 abs_upper1|lying leg raise|Op je rug hef je je gestrekte benen omhoog, met je onderrug tegen de grond.
+dead-bug|Dead bug|Core|bodyweight|abs_lower3 abs_upper2 obliques1|dead bug|Op je rug strek je afwisselend een arm en het tegenovergestelde been, met je onderrug tegen de grond.
+hollow-hold|Hollow hold|Core|bodyweight|abs_upper3 abs_lower3|hollow body hold|Op je rug houd je je schouders en benen net los van de grond. Vul het aantal seconden in bij herhalingen.
+pallof|Pallof press|Core|cable|obliques3 abs_upper2 abs_lower2|pallof press anti rotation|Zijwaarts naast de kabel druk je je handen naar voren, zonder mee te draaien.
+woodchopper|Cable woodchopper|Core|cable|obliques3 abs_upper1 delt_front1|woodchop wood chopper|Je trekt de kabel schuin langs je lichaam, met een draai vanuit je romp.
+db-side-bend|Zijwaartse buiging (dumbbell)|Core|dumbbell|obliques3|side bend|Met een dumbbell in één hand buig je opzij.
+landmine-rotation|Landmine rotatie|Core|barbell|obliques3 abs_upper1 delt_front1|landmine rotation rainbow|Je draait het uiteinde van een halter in een boog van links naar rechts.
+suitcase-carry|Suitcase carry|Core|dumbbell|obliques3 forearm_flex2 traps_upper1|suitcase carry|Lopen met één zware dumbbell, zonder opzij te hangen. Vul de afstand in meters in bij herhalingen.
+low-bar-squat|Low-bar squat|Benen|barbell|glute_max3 quads_vl2 quads_vm2 adductors2 lowerback2 hamstrings_bf1 hamstrings_st1 quads_rf1|low bar squat|Met de halter lager op je rug leun je meer voorover, waardoor je bilspieren en heupen meer werken.
+safety-bar-squat|Safety bar squat|Benen|barbell|quads_vl3 quads_vm3 glute_max3 adductors2 lowerback2 traps_upper1 quads_rf1|ssb squat safety squat bar|Met de handgrepen naar voren blijf je rechter. Prettig voor je schouders.
+box-squat|Box squat|Benen|barbell|glute_max3 quads_vl2 quads_vm2 adductors2 hamstrings_bf1 lowerback2|box squat|Je squat tot je op een kist zit en komt dan omhoog. Zo is de diepte elke keer gelijk.
+zercher-squat|Zercher squat|Benen|barbell|quads_vl3 quads_vm3 glute_max3 abs_upper2 abs_lower2 traps_upper1 biceps1|zercher squat|Met de halter in je ellebogen blijf je rechtop. Je romp werkt hard.
+smith-squat|Smith squat|Benen|machine|quads_vl3 quads_vm3 glute_max2 adductors2 quads_rf1|smith machine squat|Squatten in een vaste baan. Zet je voeten iets voor je lichaam.
+pendulum-squat|Pendulum squat|Benen|machine|quads_vl3 quads_vm3 glute_max2 quads_rf1|pendulum squat|Een machine met een boogvormige baan. Je knieën gaan ver naar voren, wat veel van je quadriceps vraagt.
+belt-squat|Belt squat|Benen|machine|quads_vl3 quads_vm3 glute_max2 adductors2|belt squat|Het gewicht hangt aan een riem om je heupen, dus je rug wordt niet belast.
+cyclist-squat|Cyclist squat (hakken omhoog)|Benen|dumbbell|quads_vm3 quads_vl3 quads_rf1 glute_max1|heel elevated squat cyclist squat|Met je hakken op een verhoging en je voeten dicht bij elkaar gaan je knieën ver naar voren. Vooral je quadriceps werken.
+sissy-squat|Sissy squat|Benen|bodyweight|quads_rf3 quads_vl3 quads_vm3|sissy squat|Je knieën gaan ver naar voren terwijl je heupen gestrekt blijven. Zo staat ook de rechte dijspier flink op rek.
+reverse-nordic|Reverse nordic|Benen|bodyweight|quads_rf3 quads_vl2 quads_vm2|reverse nordic curl|Op je knieën leun je met een rechte romp naar achteren. Veel rek op de rechte dijspier.
+leg-ext-single|Leg extension eenbenig|Benen|machine|quads_rf3 quads_vl3 quads_vm3|single leg extension|Per been strekken, zodat beide benen even hard werken.
+leg-press-single|Leg press eenbenig|Benen|machine|quads_vl3 quads_vm3 glute_max2 adductors1|single leg press|Per been drukken in de leg press.
+leg-press-high-wide|Leg press hoog en breed|Benen|machine|glute_max3 adductors2 hamstrings_st2 quads_vm2 quads_vl1|high wide foot leg press|Met je voeten hoog en breed op het plateau buigen je heupen meer, waardoor je bilspieren en adductoren meer werken.
+split-squat|Split squat|Benen|dumbbell|quads_vl3 quads_vm2 glute_max2 adductors2|split squat|Je staat in een uitvalspas en zakt recht omlaag.
+ffe-split-squat|Split squat (voorvoet verhoogd)|Benen|dumbbell|glute_max3 quads_vl2 quads_vm2 adductors2|front foot elevated split squat|Met je voorste voet op een verhoging zak je dieper, met meer rek op je bilspieren.
+walking-lunges|Walking lunges|Benen|dumbbell|quads_vl3 quads_vm2 glute_max3 glute_med2 adductors2|walking lunge uitvalspas|Uitvalspassen terwijl je naar voren loopt.
+reverse-lunges|Reverse lunges|Benen|dumbbell|glute_max3 quads_vl2 quads_vm2 adductors2|reverse lunge uitvalspas|Een stap naar achteren is vriendelijker voor je knieën en legt iets meer nadruk op je bilspieren.
+lateral-lunge|Zijwaartse lunge|Benen|dumbbell|adductors3 glute_max2 quads_vl2 glute_med1|lateral lunge side lunge|Een grote stap opzij. Veel rek op de binnenkant van je dijen.
+curtsy-lunge|Curtsy lunge|Benen|dumbbell|glute_med3 glute_max2 quads_vl2 adductors1|curtsy lunge|Je stapt schuin achter je andere been langs. Je middelste bilspier werkt extra.
+step-up|Step-ups|Benen|dumbbell|quads_vl3 quads_vm2 glute_max3 glute_med2|step up|Je stapt op een kist of bank en duwt jezelf omhoog met het voorste been.
+leg-curl-seated|Leg curl zittend|Benen|machine|hamstrings_bf3 hamstrings_st3 calves_gastro1|seated leg curl|Zittend staan je hamstrings bij je heup al op rek. In een studie van Maeo e.a. groeiden de hamstrings hierbij duidelijk meer dan bij liggend curlen.
+leg-curl-standing|Leg curl staand (eenbenig)|Benen|machine|hamstrings_bf3 hamstrings_st3 calves_gastro1|standing leg curl|Per been curlen in een staande machine.
+nordic|Nordic hamstring curl|Benen|bodyweight|hamstrings_bf3 hamstrings_st3 calves_gastro1|nordic curl|Met je hielen vast laat je je romp zo langzaam mogelijk naar voren zakken. Zwaar voor je hamstrings.
+glute-ham-raise|Glute-ham raise|Benen|bodyweight|hamstrings_bf3 hamstrings_st3 glute_max2 calves_gastro1|ghr glute ham raise|Op een speciale bank buig je je knieën en trek je jezelf omhoog met je hamstrings.
+db-rdl|Roemeense deadlift (dumbbell)|Benen|dumbbell|hamstrings_bf3 hamstrings_st3 glute_max3 lowerback2 adductors2 forearm_flex1|dumbbell rdl romanian deadlift|De Roemeense deadlift met twee dumbbells. Je heupen gaan ver naar achteren en je hamstrings staan op rek.
+smith-rdl|Roemeense deadlift (Smith)|Benen|machine|hamstrings_bf3 hamstrings_st3 glute_max3 lowerback2|smith rdl romanian deadlift|In de vaste baan van de Smith machine kun je je volledig op de heupbeweging richten.
+sl-rdl|Eenbenige Roemeense deadlift|Benen|dumbbell|hamstrings_bf3 hamstrings_st3 glute_max3 glute_med2 lowerback1|single leg rdl romanian deadlift|Op één been buig je voorover, met je andere been naar achteren. Traint ook je balans.
+stiff-leg|Stiff-leg deadlift|Benen|barbell|hamstrings_bf3 hamstrings_st3 lowerback3 glute_max2|stiff legged deadlift|Bijna gestrekte benen en elke herhaling vanaf de grond. Veel rek op je hamstrings.
+cable-pull-through|Cable pull-through|Benen|cable|glute_max3 hamstrings_bf2 hamstrings_st2 lowerback1|pull through|Met je rug naar de kabel trek je het touw tussen je benen door naar voren door je heupen te strekken.
+kettlebell-swing|Kettlebell swing|Benen|dumbbell|glute_max3 hamstrings_bf2 hamstrings_st2 lowerback2 abs_lower1|kb swing kettlebell|Explosief je heupen strekken zwaait de kettlebell naar voren.
+glute-bridge|Glute bridge|Benen|barbell|glute_max3 hamstrings_bf2 glute_med1|glute bridge|Liggend op de grond duw je je heupen omhoog. Een kortere variant van de hip thrust.
+smith-hip-thrust|Hip thrust (Smith)|Benen|machine|glute_max3 glute_med2 hamstrings_bf1 quads_rf1|smith hip thrust|De hip thrust in een vaste baan, makkelijker om op te zetten.
+machine-hip-thrust|Hip thrust machine|Benen|machine|glute_max3 glute_med2 hamstrings_bf1|hip thrust machine glute drive|Een machine voor de hip thrust, zonder halter op je heupen.
+sl-hip-thrust|Eenbenige hip thrust|Benen|bodyweight|glute_max3 glute_med2 hamstrings_bf2|single leg hip thrust|Hip thrust op één been, zwaar zonder extra gewicht.
+cable-kickback-glute|Glute kickback (kabel)|Benen|cable|glute_max3 hamstrings_bf1 glute_med1|cable glute kickback|Met de kabel aan je enkel strek je je been naar achteren.
+glute-kickback-machine|Glute kickback machine|Benen|machine|glute_max3 hamstrings_bf1|glute kickback machine|Een machine waarin je je been naar achteren duwt.
+abductor|Abductor machine|Benen|machine|glute_med3 abductors3|hip abduction machine|Je duwt je knieën naar buiten. Traint je middelste bilspier en de buitenkant van je heup.
+cable-abduction|Heupabductie (kabel)|Benen|cable|glute_med3 abductors3|cable hip abduction|Met de kabel aan je enkel beweeg je je been zijwaarts naar buiten.
+adductor-cable|Heupadductie (kabel)|Benen|cable|adductors3|cable hip adduction|Met de kabel aan je enkel trek je je been naar binnen.
+copenhagen|Copenhagen plank|Benen|bodyweight|adductors3 obliques2|copenhagen adductor plank|Een zijplank met je bovenste been op een bank. Zwaar voor de binnenkant van je dij. Vul het aantal seconden in bij herhalingen.
+kuit-leg-press|Kuitheffen in de leg press|Benen|machine|calves_gastro3 calves_soleus2|leg press calf raise|Met gestrekte benen duw je het plateau weg met je voorvoeten.
+kuit-smith|Kuitheffen (Smith)|Benen|machine|calves_gastro3 calves_soleus2|smith calf raise standing|Staand kuitheffen in de Smith machine. Zet je voorvoeten op een verhoging voor meer rek.
+donkey-calf|Donkey calf raise|Benen|machine|calves_gastro3 calves_soleus2|donkey calf raise|Voorovergebogen kuitheffen; je kuit staat onderin flink op rek.
+kuit-eenbenig|Kuitheffen eenbenig (dumbbell)|Benen|dumbbell|calves_gastro3 calves_soleus2|single leg calf raise|Op één been op een traptree, met een dumbbell in je hand.
+tibialis-raise|Tibialis raise|Benen|bodyweight|tibialis3|tib raise tibialis|Met je rug tegen de muur trek je je tenen omhoog. Traint je scheenbeenspier.
+smith-shrug|Shrugs (Smith)|Rug|machine|traps_upper3 forearm_flex1|smith shrug|Shrugs in een vaste baan; je kunt je volledig op je bovenste trapezius richten.
+rope-cable-row|Seated cable row (touw)|Rug|cable|traps_mid3 lats2 delt_rear2 biceps1|rope cable row|Met een touw kun je je handen aan het eind uit elkaar trekken, waardoor het midden van je rug extra aanspant.
+seated-db-curl|Dumbbell curl zittend|Armen|dumbbell|biceps3 brachialis2|seated dumbbell curl|Zittend kun je niet zwaaien, dus je biceps doen al het werk.
+oblique-cable-crunch|Schuine cable crunch|Core|cable|obliques3 abs_upper1|oblique cable crunch|Een cable crunch met een draai naar één kant, voor je schuine buikspieren.
+smith-split-squat|Split squat (Smith)|Benen|machine|quads_vl3 quads_vm2 glute_max2 adductors2|smith split squat|Split squat in een vaste baan, zodat je je niet druk hoeft te maken over je balans.
+`;
+const ALIASES = {
+  'bankdrukken': 'bench press flat', 'schuin-bankdrukken': 'incline bench press', 'db-bankdrukken': 'dumbbell bench press',
+  'db-schuin-drukken': 'incline dumbbell press', 'db-flyes': 'dumbbell fly flyes', 'cable-flyes': 'cable crossover fly flyes',
+  'cable-fly-hl': 'high to low cable fly crossover', 'cable-fly-lh': 'low to high cable fly crossover', 'decline-bankdrukken': 'decline bench press',
+  'chest-press': 'machine chest press', 'pec-deck': 'pec fly machine butterfly', 'dips': 'chest dips', 'push-ups': 'pushup push up opdrukken',
+  'deadlift': 'conventional deadlift', 'barbell-row': 'bent over row roeien', 'db-row': 'one arm dumbbell row roeien', 't-bar-row': 't bar row',
+  'lat-pulldown': 'lat pull down', 'seated-row': 'cable row low row roeien', 'optrekken': 'pull up pullups', 'face-pulls': 'face pull',
+  'pullover': 'dumbbell pullover', 'back-extension': 'hyperextension rugstrekken', 'squat': 'back squat high bar kniebuiging', 'front-squat': 'front squat',
+  'leg-press': 'leg press beenpers', 'rdl': 'romanian deadlift rdl', 'lunges': 'lunge uitvalspas', 'bulgarian': 'bulgarian split squat',
+  'goblet-squat': 'goblet squat', 'hack-squat': 'hack squat', 'leg-extension': 'knee extension beenstrekken', 'leg-curl': 'lying leg curl prone hamstring curl',
+  'hip-thrust': 'hip thrust barbell', 'kuit-staand': 'standing calf raise kuiten', 'kuit-zittend': 'seated calf raise kuiten', 'adductor': 'hip adduction machine',
+  'ohp': 'overhead press military press', 'db-ohp': 'dumbbell shoulder press overhead press', 'shoulder-press-machine': 'machine shoulder press',
+  'zijwaarts': 'lateral raise side raise', 'cable-zijwaarts': 'cable lateral raise', 'voorwaarts': 'front raise', 'reverse-flyes': 'rear delt fly reverse fly',
+  'arnold': 'arnold press', 'shrugs': 'dumbbell shrug', 'bb-curl': 'barbell curl', 'db-curl': 'dumbbell bicep curl', 'hamer-curl': 'hammer curl',
+  'preacher-curl': 'preacher curl machine', 'cable-curl': 'cable bicep curl', 'pushdown': 'triceps pushdown bar push down',
+  'oh-triceps': 'overhead cable triceps extension', 'skull-crushers': 'skull crusher skullcrusher lying triceps extension', 'close-grip': 'close grip bench press',
+  'cable-crunch': 'kneeling cable crunch', 'leg-raise': 'hanging leg raise', 'ab-wheel': 'ab rollout', 'russian-twist': 'russian twist'
+};
+EXTRA_EXERCISES.trim().split('\n').forEach(line => {
+  const [slug, name, group, equip, act, alias, info] = line.split('|');
+  if (!slug || EX_ACT[slug]) return;
+  LIBRARY.push([slug, name, group, equip]);
+  const a = {}; act.trim().split(/\s+/).forEach(t => { const m = t.match(/^([a-z_]+)(\d)$/); if (m && R_NAME[m[1]]) a[m[1]] = Number(m[2]); });
+  EX_ACT[slug] = [a, info];
+  ALIASES[slug] = alias;
+});
+
+/* ===== Kant-en-klare schema's =====
+   Uitgangspunten (zie docs/BRONNEN.md): elke spier bij voorkeur 2x per week, ongeveer 10 tot 20 werksets per spier per week
+   (meewerkende spieren tellen half), meeste sets tussen 6 en 15 herhalingen, ruim rusten bij zware oefeningen.
+   Item: [slug, opwarmsets, werksets, doel-herhalingen, rust in seconden] */
+const SPLITS = [
+  ['ul', 'Upper/Lower'], ['fb', 'Full body'], ['ppl', 'Push/Pull/Legs'], ['ulppl', 'Upper/Lower + PPL'], ['bro', 'Per spiergroep']
+];
+const PROGRAMS = [
+  { id: 'ul4', split: 'ul', name: 'Upper/Lower · 4 dagen', short: 'UL', days: 4, featured: true,
+    who: 'Voor wie 4 keer per week traint. Je traint om en om je boven- en onderlichaam, bijvoorbeeld ma, di, do, vr.',
+    why: 'Elke spier komt 2 keer per week aan bod. Dat gaf in een meta-analyse meer spiergroei dan 1 keer per week. Elke dag heeft een zware basisoefening (6 tot 8 herhalingen) en daarna lichtere oefeningen voor 10 tot 15 herhalingen, met oefeningen waarbij de spier op rek staat.',
+    plan: [
+      ['Upper A', [['bankdrukken', 2, 3, 6, 180], ['barbell-row', 1, 3, 8, 150], ['db-schuin-drukken', 0, 4, 10, 120], ['close-grip-pulldown', 0, 3, 10, 120], ['zijwaarts', 0, 4, 15, 90], ['incline-curl', 0, 3, 12, 90], ['oh-rope', 0, 3, 12, 90]]],
+      ['Lower A', [['squat', 2, 3, 6, 180], ['rdl', 1, 3, 8, 150], ['leg-press', 0, 3, 10, 120], ['leg-curl-seated', 0, 3, 12, 90], ['kuit-staand', 0, 4, 12, 60], ['cable-crunch', 0, 3, 12, 60]]],
+      ['Upper B', [['optrekken', 1, 3, 8, 150], ['schuin-bankdrukken', 2, 3, 8, 150], ['chest-supported-db-row', 0, 3, 10, 120], ['cable-flyes', 0, 4, 12, 90], ['cable-zijwaarts', 0, 4, 15, 90], ['reverse-pec-deck', 0, 3, 15, 90], ['bayesian-curl', 0, 3, 12, 90], ['rope-pushdown', 0, 3, 12, 90]]],
+      ['Lower B', [['deadlift', 2, 3, 5, 180], ['bulgarian', 1, 3, 10, 120], ['leg-extension', 0, 3, 12, 90], ['leg-curl', 0, 3, 12, 90], ['hip-thrust', 0, 3, 10, 120], ['kuit-zittend', 0, 3, 15, 60], ['leg-raise', 0, 3, 12, 60]]]
+    ] },
+  { id: 'ul4m', split: 'ul', name: 'Upper/Lower · 4 dagen (machines en kabels)', short: 'UL-M', days: 4, featured: true,
+    who: 'Hetzelfde ritme als het standaard Upper/Lower-schema, maar vooral met machines en kabels. Handig als je minder wilt balanceren of drukte in het vrije-gewichtengedeelte wilt vermijden.',
+    why: 'Machines en kabels geven een vaste baan en houden de spanning gelijk. Zo kun je veilig dicht bij falen trainen. Ook hier komt elke spier 2 keer per week aan bod.',
+    plan: [
+      ['Upper A', [['chest-press', 1, 4, 10, 120], ['machine-row', 1, 4, 10, 120], ['incline-chest-press', 0, 3, 10, 120], ['close-grip-pulldown', 0, 3, 10, 120], ['machine-lateral', 0, 3, 15, 90], ['cable-curl', 0, 3, 12, 90], ['oh-rope', 0, 3, 12, 90]]],
+      ['Lower A', [['hack-squat', 2, 3, 8, 180], ['smith-rdl', 1, 3, 10, 150], ['leg-press', 0, 3, 12, 120], ['leg-curl-seated', 0, 3, 12, 90], ['kuit-leg-press', 0, 4, 12, 60], ['machine-crunch', 0, 3, 12, 60]]],
+      ['Upper B', [['machine-pulldown', 1, 3, 10, 120], ['shoulder-press-machine', 1, 3, 10, 120], ['pec-deck', 0, 4, 12, 90], ['sa-cable-lat-pulldown-cs', 0, 3, 12, 90], ['cable-lateral-behind', 0, 3, 15, 90], ['reverse-pec-deck', 0, 3, 15, 90], ['bayesian-curl', 0, 3, 12, 90], ['rope-pushdown', 0, 3, 12, 90]]],
+      ['Lower B', [['pendulum-squat', 2, 3, 8, 180], ['machine-hip-thrust', 1, 3, 10, 120], ['leg-extension', 0, 3, 12, 90], ['leg-curl', 0, 3, 12, 90], ['adductor', 0, 3, 15, 60], ['abductor', 0, 3, 15, 60], ['kuit-zittend', 0, 3, 15, 60]]]
+    ] },
+  { id: 'fb3', split: 'fb', name: 'Full body · 3 dagen', short: 'FB', days: 3,
+    who: 'Voor wie 3 keer per week traint, bijvoorbeeld ma, wo, vr, of voor een drukke week.',
+    why: 'Je traint elke keer je hele lichaam, dus elke spier 3 keer per week met minder sets per training. Je volume verdeel je over de week, wat volgens onderzoek prima werkt. Het weekvolume ligt iets lager dan bij de vierdaagse schema\'s (ongeveer 6 tot 11 sets per spier): een goede start, of genoeg om je niveau vast te houden.',
+    plan: [
+      ['Full body A', [['squat', 2, 3, 8, 180], ['bankdrukken', 2, 3, 8, 150], ['barbell-row', 1, 3, 10, 120], ['zijwaarts', 0, 3, 15, 90], ['incline-curl', 0, 2, 12, 90], ['leg-curl-seated', 0, 2, 12, 90]]],
+      ['Full body B', [['rdl', 2, 3, 8, 150], ['ohp', 1, 3, 8, 150], ['optrekken', 1, 3, 8, 150], ['db-schuin-drukken', 0, 3, 10, 120], ['oh-rope', 0, 2, 12, 90], ['leg-extension', 0, 2, 12, 90], ['kuit-staand', 0, 3, 12, 60]]],
+      ['Full body C', [['leg-press', 1, 4, 10, 120], ['db-bankdrukken', 1, 3, 10, 120], ['seated-row', 0, 3, 10, 120], ['hip-thrust', 0, 3, 10, 120], ['reverse-pec-deck', 0, 2, 15, 90], ['cable-zijwaarts', 0, 2, 15, 90], ['cable-crunch', 0, 3, 12, 60]]]
+    ] },
+  { id: 'ppl3', split: 'ppl', name: 'Push/Pull/Legs · 3 dagen', short: 'PPL', days: 3,
+    who: 'Voor wie 3 keer per week traint en per training één bewegingspatroon wil: duwen, trekken, benen.',
+    why: 'Eerlijk is eerlijk: met 3 dagen train je elke spier maar 1 keer per week. Dat werkt, zeker als je per training genoeg sets doet, maar met gelijk volume gaf 2 keer per week in onderzoek iets meer groei. Kun je 6 dagen, kies dan de 6-daagse variant.',
+    plan: [
+      ['Push', [['bankdrukken', 2, 3, 8, 180], ['db-schuin-drukken', 0, 3, 10, 120], ['seated-db-ohp', 1, 3, 10, 120], ['cable-fly-lh', 0, 3, 12, 90], ['zijwaarts', 0, 4, 15, 90], ['oh-rope', 0, 3, 12, 90], ['rope-pushdown', 0, 3, 12, 90]]],
+      ['Pull', [['optrekken', 1, 3, 8, 150], ['barbell-row', 1, 3, 8, 150], ['sa-cable-lat-pulldown-cs', 0, 3, 12, 90], ['reverse-pec-deck', 0, 3, 15, 90], ['face-pulls', 0, 2, 15, 60], ['incline-curl', 0, 3, 12, 90], ['hamer-curl', 0, 3, 12, 90]]],
+      ['Legs', [['squat', 2, 3, 8, 180], ['rdl', 1, 3, 8, 150], ['leg-extension', 0, 3, 12, 90], ['leg-curl-seated', 0, 3, 12, 90], ['kuit-staand', 0, 4, 12, 60], ['leg-raise', 0, 3, 12, 60]]]
+    ] },
+  { id: 'ppl6', split: 'ppl', name: 'Push/Pull/Legs · 6 dagen', short: 'PPL6', days: 6,
+    who: 'Voor wie 6 keer per week traint en goed kan herstellen.',
+    why: 'Je doet de push-, pull- en benendag elk 2 keer per week, in een A- en een B-variant. Zo komt elke spier 2 keer per week aan bod met verschillende oefeningen.',
+    plan: [
+      ['Push A', [['bankdrukken', 2, 3, 8, 180], ['db-schuin-drukken', 0, 3, 10, 120], ['seated-db-ohp', 1, 3, 10, 120], ['cable-fly-lh', 0, 3, 12, 90], ['zijwaarts', 0, 4, 15, 90], ['oh-rope', 0, 3, 12, 90]]],
+      ['Pull A', [['optrekken', 1, 3, 8, 150], ['barbell-row', 1, 3, 8, 150], ['sa-cable-lat-pulldown-cs', 0, 3, 12, 90], ['face-pulls', 0, 3, 15, 60], ['incline-curl', 0, 3, 12, 90]]],
+      ['Legs A', [['squat', 2, 3, 8, 180], ['rdl', 1, 3, 8, 150], ['leg-extension', 0, 3, 12, 90], ['leg-curl-seated', 0, 3, 12, 90], ['kuit-staand', 0, 4, 12, 60]]],
+      ['Push B', [['schuin-bankdrukken', 2, 3, 8, 150], ['chest-press', 0, 3, 10, 120], ['ohp', 1, 3, 8, 150], ['cable-fly-hl', 0, 3, 12, 90], ['cable-zijwaarts', 0, 3, 15, 90], ['skull-crushers', 0, 3, 10, 90]]],
+      ['Pull B', [['chest-supported-t-bar', 1, 3, 10, 120], ['lat-pulldown', 1, 3, 10, 120], ['wide-cable-row', 0, 3, 12, 90], ['straight-arm-pulldown', 0, 3, 12, 90], ['reverse-pec-deck', 0, 3, 15, 90], ['bayesian-curl', 0, 3, 12, 90], ['hamer-curl', 0, 2, 12, 90]]],
+      ['Legs B', [['deadlift', 2, 3, 5, 180], ['bulgarian', 1, 3, 10, 120], ['leg-press', 0, 3, 12, 120], ['leg-curl', 0, 3, 12, 90], ['hip-thrust', 0, 3, 10, 120], ['kuit-zittend', 0, 3, 15, 60], ['cable-crunch', 0, 3, 12, 60]]]
+    ] },
+  { id: 'ulppl5', split: 'ulppl', name: 'Upper/Lower + Push/Pull/Legs · 5 dagen', short: 'ULPPL', days: 5,
+    who: 'Voor wie 5 keer per week traint. Je doet eerst upper en lower, dan push, pull en legs, bijvoorbeeld ma, di, do, vr, za.',
+    why: 'Een combinatie van twee splits. Elke spier komt 2 keer per week aan bod, met wat meer variatie dan een vierdaags schema.',
+    plan: [
+      ['Upper', [['bankdrukken', 2, 3, 6, 180], ['barbell-row', 1, 3, 8, 150], ['seated-db-ohp', 0, 3, 10, 120], ['close-grip-pulldown', 0, 3, 10, 120], ['incline-curl', 0, 2, 12, 90], ['oh-rope', 0, 2, 12, 90]]],
+      ['Lower', [['squat', 2, 3, 6, 180], ['rdl', 1, 3, 8, 150], ['leg-extension', 0, 3, 12, 90], ['leg-curl-seated', 0, 3, 12, 90], ['kuit-staand', 0, 4, 12, 60]]],
+      ['Push', [['schuin-bankdrukken', 2, 3, 8, 150], ['chest-press', 0, 3, 10, 120], ['cable-fly-hl', 0, 3, 12, 90], ['zijwaarts', 0, 4, 15, 90], ['rope-pushdown', 0, 3, 12, 90], ['oh-db-ext', 0, 2, 12, 90]]],
+      ['Pull', [['optrekken', 1, 3, 8, 150], ['chest-supported-db-row', 0, 3, 10, 120], ['sa-cable-lat-pulldown-cs', 0, 3, 12, 90], ['reverse-pec-deck', 0, 3, 15, 90], ['bayesian-curl', 0, 3, 12, 90], ['hamer-curl', 0, 2, 12, 90]]],
+      ['Legs', [['leg-press', 2, 3, 10, 150], ['hip-thrust', 1, 3, 10, 120], ['bulgarian', 0, 3, 10, 120], ['leg-curl', 0, 3, 12, 90], ['kuit-zittend', 0, 3, 15, 60], ['cable-crunch', 0, 3, 12, 60]]]
+    ] },
+  { id: 'bro5', split: 'bro', name: 'Per spiergroep · 5 dagen', short: 'Split', days: 5,
+    who: 'Voor wie per dag één spiergroep wil trainen: borst, rug, schouders, benen en armen.',
+    why: 'Eerlijk is eerlijk: hier train je elke spier maar 1 keer per week met veel sets in één keer. Bij hetzelfde weekvolume zijn de verschillen met 2 keer per week klein, maar boven ongeveer 10 sets per spier per training neemt het extra effect af. Voor de meeste mensen werken Upper/Lower of Push/Pull/Legs daarom iets beter.',
+    plan: [
+      ['Borst', [['bankdrukken', 2, 4, 8, 180], ['schuin-bankdrukken', 1, 3, 10, 150], ['cable-fly-hl', 0, 3, 12, 90], ['cable-fly-lh', 0, 3, 12, 90], ['dips', 0, 3, 10, 120]]],
+      ['Rug', [['optrekken', 1, 4, 8, 150], ['barbell-row', 1, 3, 8, 150], ['sa-cable-lat-pulldown-cs', 0, 3, 12, 90], ['seated-row', 0, 3, 10, 120], ['straight-arm-pulldown', 0, 3, 12, 90], ['back-extension', 0, 2, 12, 90]]],
+      ['Schouders', [['seated-db-ohp', 1, 4, 10, 120], ['zijwaarts', 0, 4, 15, 90], ['cable-lateral-behind', 0, 3, 15, 90], ['reverse-pec-deck', 0, 3, 15, 90], ['face-pulls', 0, 3, 15, 60], ['shrugs', 0, 3, 12, 90]]],
+      ['Benen', [['squat', 2, 4, 8, 180], ['rdl', 1, 3, 8, 150], ['leg-press', 0, 3, 12, 120], ['leg-extension', 0, 3, 12, 90], ['leg-curl-seated', 0, 3, 12, 90], ['kuit-staand', 0, 4, 12, 60]]],
+      ['Armen', [['ez-curl', 0, 3, 10, 90], ['oh-db-ext', 0, 3, 12, 90], ['incline-curl', 0, 3, 12, 90], ['rope-pushdown', 0, 3, 12, 90], ['hamer-curl', 0, 3, 12, 90], ['cable-crunch', 0, 3, 12, 60]]]
+    ] }
+];
+/* Werksets per week per spier van een schema (zelfde rekenregel als bij Voortgang, met de zwaarste regio per spier) */
+function programLoad(pr) {
+  const load = {};
+  pr.plan.forEach(([, items]) => items.forEach(([slug, , sets]) => {
+    const act = (EX_ACT[slug] || [{}])[0];
+    Object.keys(act).forEach(r => { load[r] = (load[r] || 0) + sets * LEVEL_WEIGHT[act[r]]; });
+  }));
+  const out = {};
+  MUSCLE_FILTERS.forEach(([k, l, regs]) => { out[k] = Math.max(0, ...regs.map(r => load[r] || 0)); });
+  return out;
+}
 
 /* ================= Opslag =================
    Alle data zit in één object. Elk record heeft een vaste id, updatedAt en deleted,
@@ -821,7 +1191,8 @@ function viewHtml() {
   if (ui.tab === 'progress') return progressView();
   if (ui.tab === 'history') { const w = ui.editingWorkoutId && getWorkout(ui.editingWorkoutId); return w ? workoutEditor(w, 'edit') : historyView(); }
   const t = ui.editingTemplateId && getTemplate(ui.editingTemplateId);
-  return t ? templateEditor(t) : schemasView();
+  if (t) return templateEditor(t);
+  return ui.programsOpen ? programsView() : schemasView();
 }
 
 function needsBackup() {
@@ -834,6 +1205,35 @@ function backupBanner() {
   const last = db.meta.lastBackupAt;
   const txt = last ? 'Laatste back-up: ' + Math.floor((Date.now() - new Date(last).getTime()) / 86400000) + ' dagen geleden' : 'Je hebt nog geen back-up gemaakt';
   return `<div class="banner"><span>${txt}</span><button type="button" class="btn" data-act="backup">Back-up maken</button></div>`;
+}
+
+/* ---------- Herstel: hoe lang geleden is elke spier getraind ---------- */
+function lastTrainedDays() {
+  const out = {};
+  const fin = finishedWorkouts();
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  MUSCLE_FILTERS.forEach(([k, , regs]) => {
+    for (let i = fin.length - 1; i >= 0; i--) {
+      const w = fin[i];
+      if (w.exercises.some(we => we.sets.some(isWorkingSet) && actLevelIn(getEx(we.exerciseId) || {}, regs) >= 2)) {
+        const d = new Date(w.startedAt); d.setHours(0, 0, 0, 0);
+        out[k] = Math.round((today - d) / 86400000); break;
+      }
+    }
+  });
+  return out;
+}
+function recoveryCard() {
+  if (!finishedWorkouts().length) return '';
+  const L = lastTrainedDays();
+  const txt = d => d == null ? '–' : d <= 0 ? 'vandaag' : d === 1 ? 'gisteren' : d + ' d';
+  const cls = d => d == null ? '' : d <= 1 ? 'l3' : d <= 3 ? 'l2' : 'l1';
+  return `<details class="card recov" ${ui.recovOpen === false ? '' : 'open'} data-tog="recov">
+    <summary><strong>Herstel per spier</strong><span class="muted"> · laatst getraind</span></summary>
+    <div class="recov-grid">${MUSCLE_FILTERS.map(([k, l]) => `<div><span><span class="dot ${cls(L[k])}"></span>${l}</span><span class="muted nowrap">${txt(L[k])}</span></div>`).join('')}</div>
+    <div class="legend" style="margin-top:8px"><span><i style="background:var(--m-3)"></i>0–1 dag: herstelt nog</span><span><i style="background:var(--m-2)"></i>2–3 dagen</span><span><i style="background:var(--m-1)"></i>4+ dagen: fris</span></div>
+    <p class="muted" style="font-size:13px;margin:6px 0 0">– = nog niet getraind. Telt alleen als de spier hoofdspier was of sterk meewerkte. Meestal is een spier na 2 tot 3 dagen weer klaar voor een nieuwe zware training.</p>
+  </details>`;
 }
 
 /* ---------- Training: startscherm ---------- */
@@ -863,7 +1263,8 @@ function trainingStart() {
     ${ui.startDate && ui.startDate !== todayStr() ? '<p class="muted" style="margin:-4px 0 0;font-size:14px">Je logt een training op een eerdere datum.</p>' : ''}
     ${backupBanner()}
     ${list}
-    <button type="button" class="btn btn-soft btn-block btn-lg" style="background:var(--card)" data-act="start-empty">Lege training starten</button>`;
+    <button type="button" class="btn btn-soft btn-block btn-lg" style="background:var(--card)" data-act="start-empty">Lege training starten</button>
+    ${recoveryCard()}`;
 }
 
 /* ---------- Training: invoeren (ook gebruikt voor bewerken uit Historie) ---------- */
@@ -900,7 +1301,8 @@ function workoutEditor(w, mode) {
       <button type="button" class="btn btn-ghost-accent" data-act="pick-ex" data-target="workout">+ Oefening toevoegen</button>
       ${isLive
         ? '<button type="button" class="btn-text danger" data-act="cancel-workout">Training stoppen zonder opslaan</button>'
-        : `<button type="button" class="btn-text danger" data-act="delete-workout" data-id="${w.id}">Training verwijderen</button>`}
+        : `${activeWorkout() ? '' : `<button type="button" class="btn btn-accent btn-lg" data-act="repeat-workout" data-id="${w.id}">Deze training opnieuw doen</button>`}
+           <button type="button" class="btn-text danger" data-act="delete-workout" data-id="${w.id}">Training verwijderen</button>`}
     </section>`;
 }
 function datePicker(key, ymd, label) {
@@ -943,7 +1345,8 @@ function exerciseCard(w, we) {
     </div>
     <div class="ex-info">
       <div class="min0">
-        <div class="ex-sub">${pww ? 'Vorige: ' + wwText(pww) : 'Nog geen eerdere data'} · rust ${fmtClock(restFor(we))}</div>
+        <div class="ex-sub">${pww ? `<button type="button" class="link-inline" data-act="ex-history" data-id="${we.exerciseId}">Vorige: ${wwText(pww)}</button>` : 'Nog geen eerdere data'} · rust ${fmtClock(restFor(we))}</div>
+        ${ex && ex.pinnedNote ? `<div class="pin-note">${ICON.pin}<span>${esc(ex.pinnedNote)}</span></div>` : ''}
         ${(() => { const act = exAct(ex); const m3 = byLevel(act, 3), m2 = byLevel(act, 2), m1 = byLevel(act, 1);
           return m3.length ? `<div class="ex-muscles"><div><span class="dot l3"></span><strong>${esc(m3.map(r => R_NAME[r]).join(', '))}</strong></div>
             ${m2.length + m1.length ? `<div class="muted">+ ${m2.length + m1.length} spier${m2.length + m1.length === 1 ? '' : 'en'} die meewerk${m2.length + m1.length === 1 ? 't' : 'en'} · <button type="button" class="link-inline" data-act="ex-info" data-id="${we.exerciseId}">bekijk</button></div>` : ''}</div>` : ''; })()}
@@ -952,12 +1355,16 @@ function exerciseCard(w, we) {
     </div>
     <div class="set-row set-head" aria-hidden="true"><span>Set</span><span>${unit}</span><span>Herh.</span><span></span></div>
     ${rows}
-    <div class="ex-actions">
+    <div class="ex-actions${ex && ex.equipment === 'barbell' ? ' three' : ''}">
       <button type="button" class="btn btn-dashed" data-act="add-set" data-we="${we.id}">+ Set</button>
-      <button type="button" class="btn btn-soft" data-act="toggle-note" data-we="${we.id}">${showNote ? 'Opmerking verbergen' : 'Opmerking'}</button>
+      <button type="button" class="btn btn-soft" data-act="toggle-note" data-we="${we.id}">${showNote ? 'Notities verbergen' : 'Notities'}</button>
+      ${ex && ex.equipment === 'barbell' ? `<button type="button" class="btn btn-soft" data-act="plates" data-we="${we.id}">Schijven</button>` : ''}
     </div>
-    ${showNote ? `<div class="note"><label class="sr" for="note-${we.id}">Opmerking bij ${esc(exName(we.exerciseId))}</label>
-      <textarea id="note-${we.id}" data-in="note" data-we="${we.id}" rows="2" placeholder="Bijv. stoelstand 4, laatste herhaling was zwaar">${esc(we.note)}</textarea></div>` : ''}
+    ${showNote ? `<div class="note stack">
+      <label class="field" for="note-${we.id}">Opmerking voor deze training
+        <textarea id="note-${we.id}" data-in="note" data-we="${we.id}" rows="2" placeholder="Bijv. laatste herhaling was zwaar">${esc(we.note)}</textarea></label>
+      <label class="field" for="pin-${we.id}">Vaste notitie bij deze oefening (komt elke keer terug)
+        <textarea id="pin-${we.id}" data-in="pin-note" data-id="${we.exerciseId}" rows="2" placeholder="Bijv. stoelstand 4, kabel op stand 12">${esc(ex ? ex.pinnedNote || '' : '')}</textarea></label></div>` : ''}
   </article>`;
 }
 function noteShown(we) { const o = ui.noteOpen[we.id]; return o === true || (!!we.note && o !== false); }
@@ -996,10 +1403,10 @@ function progressView() {
     </div>`;
   const mc = muscleCard(inP, p, periodWord);
   if (!opts.length) {
-    return head + `<div class="card empty"><strong>Nog geen voortgang</strong><p>Rond je eerste training af. Daarna zie je hier per oefening hoe je werkset-gewicht zich ontwikkelt.</p></div>` + mc;
+    return head + mc + `<div class="card empty"><strong>Nog geen voortgang</strong><p>Rond je eerste training af. Daarna zie je hier per oefening hoe je werkset-gewicht zich ontwikkelt.</p></div>`;
   }
   const sess = sessionsFor(ui.progressEx);
-  return head + `
+  return head + mc + `
     <div class="card stack">
       <div class="field"><label for="progress-ex">Oefening</label>
         <select class="select" id="progress-ex" data-ch="progress-ex">${opts.map(id => `<option value="${id}" ${id === ui.progressEx ? 'selected' : ''}>${esc(exName(id))}</option>`).join('')}</select>
@@ -1007,8 +1414,7 @@ function progressView() {
       ${progressChart(sess, p)}
     </div>
     <h2>Trainingen met ${esc(exName(ui.progressEx))}</h2>
-    <div class="card rows" style="padding-block:4px">${sessionRows(sess)}</div>
-    ${mc}`;
+    <div class="card rows" style="padding-block:4px">${sessionRows(sess)}</div>`;
 }
 function muscleCard(ws, p, periodWord) {
   const load = muscleLoad(ws);
@@ -1116,6 +1522,11 @@ function schemasView() {
   const last = db.meta.lastBackupAt;
   return `
     <header class="stack"><h1>Schema's</h1></header>
+    <button type="button" class="card list-card prog-entry" data-act="programs-open">
+      <span class="name">Kant‑en‑klare schema's</span>
+      <span class="meta">Kies een split, zoals Upper/Lower voor 4 dagen per week, en voeg de schema's met één tik toe.</span>
+    </button>
+    <h2>Mijn schema's</h2>
     <div class="stack">
       ${tpls.map(t => `<button type="button" class="card list-card" data-act="edit-template" data-id="${t.id}">
         <span class="name">${esc(t.name || 'Naamloos schema')}</span>
@@ -1144,6 +1555,35 @@ function schemasView() {
       <label class="btn btn-soft btn-lg" for="restore-file">Back-up terugzetten</label>
       <input type="file" id="restore-file" class="sr" accept="application/json,.json" data-ch="restore">
     </div>`;
+}
+function programsView() {
+  const f = ui.programSplit || null;
+  const list = PROGRAMS.filter(pr => !f || pr.split === f);
+  const added = new Set(live(db.templates).map(t => t.programId).filter(Boolean));
+  const show = [['borst', 'Borst'], ['lats', 'Lats'], ['midden-rug', 'Midden rug'], ['zij-schouder', 'Zijkant schouder'], ['achter-schouder', 'Achterkant schouder'], ['biceps', 'Biceps'], ['triceps', 'Triceps'], ['quadriceps', 'Quadriceps'], ['hamstrings', 'Hamstrings'], ['bilspieren', 'Bilspieren'], ['kuiten', 'Kuiten'], ['buik', 'Buik']];
+  const r1 = v => fmtNum(Math.round(v * 2) / 2);
+  return `
+    <button type="button" class="link-back" data-act="programs-close">‹ Schema's</button>
+    <header class="stack"><h1>Kant‑en‑klare schema's</h1>
+      <p class="muted" style="margin:0">Gebaseerd op onderzoek naar spiergroei: elke spier bij voorkeur 2 keer per week, ongeveer 10 tot 20 werksets per spier per week, de meeste sets tussen 6 en 15 herhalingen. Na het toevoegen kun je alles aanpassen.</p>
+    </header>
+    <div class="chips" role="group" aria-label="Split">
+      <button type="button" class="chip" data-act="program-split" data-k="" aria-pressed="${!f}">Alle splits</button>
+      ${SPLITS.map(([k, l]) => `<button type="button" class="chip" data-act="program-split" data-k="${k}" aria-pressed="${f === k}">${l}</button>`).join('')}
+    </div>
+    ${list.map(pr => { const L = programLoad(pr); return `<article class="card stack prog-card">
+      <div class="row-between" style="align-items:flex-start"><div class="min0"><div class="list-card"><span class="name">${esc(pr.name)}</span></div>
+        <div class="meta muted" style="font-size:14px">${pr.days} trainingen per week${pr.featured ? ' · past bij jouw 4 keer per week' : ''}</div></div>
+        ${added.has(pr.id) ? '<span class="badge">Toegevoegd</span>' : ''}</div>
+      <p style="margin:0">${esc(pr.who)}</p>
+      <div class="info-box">${ICON.info}<p>${esc(pr.why)}</p></div>
+      ${pr.plan.map(([day, items]) => `<details class="prog-day"><summary><strong>${esc(day)}</strong><span class="muted"> · ${items.length} oefeningen</span></summary>
+        <div class="rows">${items.map(([slug, w, n, r, rest]) => `<div><span class="min0">${esc(exName('lib-' + slug))}</span><span class="muted nowrap">${w ? w + ' opw. + ' : ''}${n} × ${r} · ${fmtClock(rest)}</span></div>`).join('')}</div></details>`).join('')}
+      <details class="prog-day"><summary><strong>Werksets per week</strong><span class="muted"> · per spier</span></summary>
+        <div class="vol-grid">${show.map(([k, l]) => `<div><span>${l}</span><strong>${r1(L[k])}</strong></div>`).join('')}</div>
+        <p class="muted" style="font-size:13px;margin:6px 0 0">Een set telt volledig voor de hoofdspier, half voor een spier die sterk meewerkt en voor een kwart voor een spier die meehelpt.</p></details>
+      <button type="button" class="btn ${added.has(pr.id) ? 'btn-soft' : 'btn-accent'} btn-lg" data-act="program-add" data-id="${pr.id}">${added.has(pr.id) ? 'Nog een keer toevoegen' : 'Toevoegen aan mijn schema\'s'}</button>
+    </article>`; }).join('')}`;
 }
 function templateEditor(t) {
   const restOpts = [0, 45, 60, 75, 90, 120, 150, 180, 240, 300];
@@ -1186,6 +1626,11 @@ function stepper(it, field, min, max) {
 }
 
 /* ---------- Sheets (pop-ups van onderen) ---------- */
+function keepSheetScroll() {
+  const sh = $('.sheet'); const sc = sh ? sh.scrollTop : 0;
+  const det = $('.sheet details.pick-map'); if (det && ui.sheet) ui.sheet.mapOpen = det.open;
+  renderSheet(); const n = $('.sheet'); if (n) n.scrollTop = sc;
+}
 function renderSheet() {
   const root = $('#sheet-root');
   const s = ui.sheet;
@@ -1224,6 +1669,8 @@ function sheetHtml(s) {
         <button type="button" class="btn btn-soft btn-lg" data-act="ex-move" data-d="-1" ${i === 0 ? 'disabled style="opacity:.4"' : ''}>${ICON.up} Omhoog</button>
         <button type="button" class="btn btn-soft btn-lg" data-act="ex-move" data-d="1" ${i === w.exercises.length - 1 ? 'disabled style="opacity:.4"' : ''}>${ICON.down} Omlaag</button>
       </div>
+      <button type="button" class="btn btn-soft btn-lg" data-act="ex-replace">Vervangen door andere oefening</button>
+      <button type="button" class="btn btn-soft btn-lg" data-act="ex-history" data-id="${we.exerciseId}">Geschiedenis</button>
       <button type="button" class="btn btn-soft btn-lg" data-act="muscle-edit" data-id="${we.exerciseId}">Spieren aanpassen</button>
       <button type="button" class="btn btn-soft btn-lg" data-act="ex-remove" style="color:var(--danger)">Verwijderen uit deze training</button>
       <button type="button" class="btn-text" data-act="close-sheet">Sluiten</button>`;
@@ -1242,13 +1689,28 @@ function sheetHtml(s) {
         <button type="button" class="btn btn-accent btn-lg" data-act="picker-save-new">Oefening opslaan en toevoegen</button>
         <button type="button" class="btn-text" data-act="picker-back">Terug naar de lijst</button>`;
     }
-    return `<h3 id="sheet-title">Oefening toevoegen</h3>
+    const regs = pickerRegions(s);
+    const st = {}; (regs || []).forEach(r => { st[r] = 'l3'; });
+    const rep = s.target === 'replace' ? locateWE(s.weId) : null;
+    return `<h3 id="sheet-title">${rep ? 'Vervangen: ' + esc(exName(rep.we.exerciseId)) : 'Oefening toevoegen'}</h3>
+      ${rep ? `<p style="font-size:14px">Hieronder staan oefeningen die dezelfde hoofdspier trainen.${rep.we.sets.some(x => x.done) ? ' Je afgevinkte sets van deze oefening worden gewist.' : ''}</p>` : ''}
       <label class="sr" for="pk-q">Zoek een oefening</label>
-      <input class="text" id="pk-q" type="search" placeholder="Zoek, bijv. curl" value="${esc(s.q)}" data-in="picker-q" autocomplete="off">
-      <div class="chips" role="group" aria-label="Spiergroep">
-        <button type="button" class="chip" data-act="picker-muscle" data-m="" aria-pressed="${!s.muscle}">Alles</button>
+      <input class="text" id="pk-q" type="search" placeholder="Zoek, bijv. skull crusher of brede rugspier" value="${esc(s.q)}" data-in="picker-q" autocomplete="off">
+      <div class="chip-label">Groep</div>
+      <div class="chips" role="group" aria-label="Groep">
+        <button type="button" class="chip" data-act="picker-muscle" data-m="" aria-pressed="${!s.muscle}">Alle groepen</button>
         ${MUSCLES.map(m => `<button type="button" class="chip" data-act="picker-muscle" data-m="${m}" aria-pressed="${s.muscle === m}">${m}</button>`).join('')}
       </div>
+      <div class="chip-label">Spier</div>
+      <div class="chips" role="group" aria-label="Spier">
+        ${MUSCLE_FILTERS.map(([k, l]) => `<button type="button" class="chip" data-act="picker-mf" data-k="${k}" aria-pressed="${s.mf === k && !s.region}">${l}</button>`).join('')}
+      </div>
+      <details class="pick-map" ${s.mapOpen === false ? '' : 'open'} data-tog="pick-map">
+        <summary>Kies via de spierfiguur</summary>
+        <p class="muted" style="font-size:13px;margin:4px 0 6px">Tik op een spier om te zien welke oefeningen die trainen.</p>
+        ${bodySvg(st, { caps: true, tap: true })}
+      </details>
+      ${regs ? `<div class="sel-bar"><span>Spier: <strong>${esc(s.region ? R_NAME[s.region] : MF[s.mf].label)}</strong></span><button type="button" class="btn btn-soft" data-act="picker-clear">Wissen ✕</button></div>` : ''}
       <div id="picker-list">${pickerList()}</div>`;
   }
   if (s.type === 'finish') {
@@ -1298,6 +1760,7 @@ function sheetHtml(s) {
       ${vf.view !== 'both' || vf.crop ? `<details class="more"><summary>Hele lichaam bekijken</summary>${bodySvg(actStates(act), { caps: true })}</details>` : ''}
       ${actLegend()}
       ${[3, 2, 1].map(l => { const rs = byLevel(act, l); return rs.length ? `<div class="pick-group"><h4><span class="dot l${l}"></span>${LEVEL_NAME[l]}</h4><p style="margin:0;color:var(--ink)">${rs.map(r => esc(R_NAME[r])).join(', ')}</p></div>` : ''; }).join('')}
+      <p class="muted" style="margin:0;font-size:13px">Deze indeling is een richtlijn, gebaseerd op onderzoek naar spieractiviteit en spiergroei. Hoeveel een spier precies meedoet, verschilt per persoon, techniek, grip en hoek.</p>
       <button type="button" class="btn btn-soft btn-lg" data-act="muscle-edit" data-id="${ex.id}">Spieren aanpassen</button>
       <button type="button" class="btn-text" data-act="close-sheet">Sluiten</button>`;
   }
@@ -1310,26 +1773,81 @@ function sheetHtml(s) {
       ${slug && EX_ACT[slug] ? '<button type="button" class="btn btn-soft btn-lg" data-act="muscle-reset">Standaard herstellen</button>' : ''}
       <button type="button" class="btn-text" data-act="close-sheet">Annuleren</button>`;
   }
+  if (s.type === 'history') {
+    const ex = getEx(s.exId); if (!ex) return '';
+    const rows = [];
+    const fin = finishedWorkouts();
+    for (let i = fin.length - 1; i >= 0 && rows.length < 8; i--) {
+      const we = fin[i].exercises.find(x => x.exerciseId === ex.id && x.sets.some(y => y.done));
+      if (we) rows.push({ w: fin[i], we });
+    }
+    return `<h3 id="sheet-title">Geschiedenis: ${esc(ex.name)}</h3>
+      ${rows.length ? `<div class="stack">${rows.map(({ w, we }) => { const ww = workingWeight(we); return `<div class="hist-row">
+        <div class="row-between"><strong>${fmtDateShort(w.startedAt)}</strong>${ww ? `<span>${wwText(ww)}</span>` : ''}</div>
+        <div class="muted" style="font-size:14px">${we.sets.filter(x => x.done).map(x => (x.warmup ? 'W ' : '') + fmtNum(x.kg) + '×' + x.reps).join(' · ')}</div>
+        ${we.note ? `<div style="font-size:14px">“${esc(we.note)}”</div>` : ''}</div>`; }).join('')}</div>` : '<p>Je hebt deze oefening nog niet eerder gedaan.</p>'}
+      <button type="button" class="btn btn-soft btn-lg" data-act="close-sheet">Sluiten</button>`;
+  }
+  if (s.type === 'plates') {
+    return `<h3 id="sheet-title">Schijvencalculator</h3>
+      <div class="tpl-grid">
+        <div class="field"><label for="pl-total">Totaal gewicht (kg)</label><input class="text" id="pl-total" inputmode="decimal" value="${s.total == null ? '' : fmtNum(s.total)}" data-in="plate-total" autocomplete="off"></div>
+        <div class="field"><label for="pl-bar">Stang</label><select class="select" id="pl-bar" data-ch="plate-bar">${[20, 15, 10].map(b => `<option value="${b}" ${s.bar === b ? 'selected' : ''}>${b} kg</option>`).join('')}</select></div>
+      </div>
+      <div id="plate-out">${plateHtml(s.total, s.bar)}</div>
+      <button type="button" class="btn btn-soft btn-lg" data-act="close-sheet">Sluiten</button>`;
+  }
   if (s.type === 'info') return `<h3 id="sheet-title">${s.title}</h3><p>${s.text}</p><button type="button" class="btn btn-soft btn-lg" data-act="close-sheet">Oké</button>`;
   return '';
 }
+const PLATES = [25, 20, 15, 10, 5, 2.5, 1.25];
+function platesFor(total, bar) {
+  if (total == null || total < bar) return null;
+  let side = Math.round((total - bar) / 2 * 100) / 100; const out = [];
+  PLATES.forEach(p => { while (side >= p - 1e-9) { out.push(p); side = Math.round((side - p) * 100) / 100; } });
+  return { plates: out, rest: side };
+}
+function plateHtml(total, bar) {
+  if (total == null) return '<p>Vul het totale gewicht in.</p>';
+  if (total < bar) return `<p>Dat is minder dan de stang van ${bar} kg.</p>`;
+  const r = platesFor(total, bar);
+  if (!r.plates.length) return '<p>Alleen de stang, zonder schijven.</p>';
+  const h = p => 36 + p * 3.2;
+  return `<p style="color:var(--ink)"><strong>Per kant:</strong> ${r.plates.map(p => fmtNum(p)).join(' + ')} kg</p>
+    <div class="plate-viz" aria-hidden="true"><span class="sleeve"></span>${r.plates.map(p => `<span class="plate p${String(p).replace('.', '_')}" style="height:${h(p)}px">${fmtNum(p)}</span>`).join('')}</div>
+    ${r.rest > 0 ? `<p>Er blijft ${fmtNum(r.rest * 2)} kg over die je niet met gewone schijven kunt maken.</p>` : ''}`;
+}
+function pickerRegions(s) { return s.region ? [s.region] : s.mf && MF[s.mf] ? MF[s.mf].regions : null; }
 function pickerList() {
   const s = ui.sheet;
-  const q = (s.q || '').trim().toLowerCase();
-  const list = live(db.exercises).filter(e => (!s.muscle || e.muscle === s.muscle) && (!q || e.name.toLowerCase().includes(q)))
-    .sort((a, b) => a.name.localeCompare(b.name, 'nl'));
-  let present = new Set();
+  const q = (s.q || '').trim();
+  const regs = pickerRegions(s);
+  let present = new Set(), replacing = null;
   if (s.target === 'workout') { const w = getWorkout(ui.ctxWorkoutId); if (w) present = new Set(w.exercises.map(x => x.exerciseId)); }
+  else if (s.target === 'replace') { const loc = locateWE(s.weId); if (loc) { present = new Set(loc.w.exercises.map(x => x.exerciseId)); replacing = loc.we.exerciseId; } }
   else { const t = getTemplate(ui.editingTemplateId); if (t) present = new Set(t.items.map(x => x.exerciseId)); }
-  let html = '';
-  MUSCLES.forEach(m => {
-    const g = list.filter(e => e.muscle === m);
-    if (!g.length) return;
-    html += `<div class="pick-group"><h4>${m}</h4>${g.map(e => `<button type="button" class="pick-item" data-act="picker-choose" data-id="${e.id}">
-      <span>${esc(e.name)}</span><small>${present.has(e.id) ? 'al toegevoegd' : esc(mainText(exAct(e)) || EQUIP[e.equipment] || '')}</small></button>`).join('')}</div>`;
-  });
-  if (!list.length) html += `<p style="margin:12px 0 4px">Geen oefening gevonden${q ? ' voor “' + esc(s.q) + '”' : ''}.</p>`;
-  html += `<button type="button" class="btn btn-dashed btn-block" style="margin-top:12px" data-act="picker-new">+ Nieuwe oefening${q ? ' “' + esc(s.q) + '”' : ''} maken</button>`;
+  const list = live(db.exercises).filter(e => e.id !== replacing && (!s.muscle || e.muscle === s.muscle) && matchQuery(e, q))
+    .sort((a, b) => a.name.localeCompare(b.name, 'nl'));
+  const item = e => `<button type="button" class="pick-item" data-act="picker-choose" data-id="${e.id}">
+      <span>${esc(e.name)}</span><small>${present.has(e.id) ? 'al toegevoegd' : esc(mainText(exAct(e)) || EQUIP[e.equipment] || '')}</small></button>`;
+  let html = '', shown = 0;
+  if (regs) {
+    [3, 2, 1].forEach(l => {
+      const g = list.filter(e => actLevelIn(e, regs) === l);
+      if (!g.length) return;
+      shown += g.length;
+      html += `<div class="pick-group"><h4><span class="dot l${l}"></span>${LEVEL_NAME[l]}</h4>${g.map(item).join('')}</div>`;
+    });
+  } else {
+    MUSCLES.forEach(m => {
+      const g = list.filter(e => e.muscle === m);
+      if (!g.length) return;
+      shown += g.length;
+      html += `<div class="pick-group"><h4>${m}</h4>${g.map(item).join('')}</div>`;
+    });
+  }
+  if (!shown) html += `<p style="margin:12px 0 4px">Geen oefening gevonden${q ? ' voor “' + esc(q) + '”' : ''}.</p>`;
+  if (s.target !== 'replace') html += `<button type="button" class="btn btn-dashed btn-block" style="margin-top:12px" data-act="picker-new">+ Nieuwe oefening${q ? ' “' + esc(q) + '”' : ''} maken</button>`;
   return html;
 }
 
@@ -1540,8 +2058,46 @@ const actions = {
     loc.w.exercises = loc.w.exercises.filter(x => x !== loc.we);
     touch(loc.w); persist(); ui.sheet = null; render();
   },
-  'pick-ex'(d) { ui.sheet = { type: 'picker', target: d.target, q: '', muscle: null, creating: false }; renderSheet(); },
-  'picker-muscle'(d) { ui.sheet.muscle = d.m || null; renderSheet(); },
+  'pick-ex'(d) { ui.sheet = { type: 'picker', target: d.target, q: '', muscle: null, mf: null, region: null, creating: false }; renderSheet(); },
+  'picker-muscle'(d) { ui.sheet.muscle = d.m || null; keepSheetScroll(); },
+  'picker-mf'(d) { const s = ui.sheet; s.region = null; s.mf = s.mf === d.k ? null : d.k; keepSheetScroll(); },
+  'pick-region'(d) { const s = ui.sheet; if (!s || s.type !== 'picker') return; s.mf = null; s.region = s.region === d.r ? null : d.r; keepSheetScroll(); },
+  'programs-open'() { ui.programsOpen = true; render(); window.scrollTo(0, 0); },
+  'programs-close'() { ui.programsOpen = false; render(); window.scrollTo(0, 0); },
+  'program-split'(d) { ui.programSplit = d.k || null; render(); },
+  'program-add'(d) {
+    const pr = PROGRAMS.find(x => x.id === d.id); if (!pr) return;
+    pr.plan.forEach(([day, items]) => {
+      db.templates.push({ id: uid(), name: pr.short + ' · ' + day, programId: pr.id, deleted: false, updatedAt: nowIso(),
+        items: items.filter(([slug]) => getEx('lib-' + slug)).map(([slug, w, n, r, rest]) => ({ id: uid(), exerciseId: 'lib-' + slug, warmups: w, sets: n, reps: r, restSec: rest })) });
+    });
+    persist(); toast(pr.plan.length + " schema's toegevoegd"); render();
+  },
+  'ex-history'(d) { if (getEx(d.id)) { ui.sheet = { type: 'history', exId: d.id }; renderSheet(); } },
+  'plates'(d) {
+    const loc = locateWE(d.we); if (!loc) return;
+    const ph = placeholders(loc.w, loc.we);
+    const i = loc.we.sets.findIndex(x => !x.done);
+    const j = i < 0 ? loc.we.sets.length - 1 : i;
+    const st = loc.we.sets[j];
+    ui.sheet = { type: 'plates', total: st ? (st.kg != null ? st.kg : ph[j].kg) : null, bar: 20 }; renderSheet();
+  },
+  'repeat-workout'(d) {
+    const src = getWorkout(d.id); if (!src || activeWorkout()) return;
+    const tpl = { id: src.templateId && getTemplate(src.templateId) ? src.templateId : null, name: src.name,
+      items: src.exercises.map(we => ({ exerciseId: we.exerciseId, warmups: we.sets.filter(x => x.warmup).length, sets: Math.max(1, we.sets.filter(x => !x.warmup).length), reps: we.targetReps, restSec: we.restSec })) };
+    ui.editingWorkoutId = null; ui.startDate = null;
+    startWorkout(tpl);
+  },
+  'picker-clear'() { ui.sheet.mf = null; ui.sheet.region = null; keepSheetScroll(); },
+  'ex-replace'() {
+    const loc = locateWE(ui.sheet.weId); if (!loc) return;
+    const act = exAct(getEx(loc.we.exerciseId));
+    const main = byLevel(act, 3);
+    const f = MUSCLE_FILTERS.find(x => main.length && main.every(r => x[2].includes(r)));
+    ui.sheet = { type: 'picker', target: 'replace', weId: loc.we.id, q: '', muscle: null, mf: f ? f[0] : null, region: !f && main.length ? main[0] : null, mapOpen: false };
+    renderSheet();
+  },
   'picker-new'() {
     const s = ui.sheet; const g = s.muscle || 'Borst';
     Object.assign(s, { creating: true, newName: s.q || '', group: g, equip: 'barbell', act: Object.assign({}, GROUP_ACT[g]), focusName: true });
@@ -1582,6 +2138,18 @@ const actions = {
   },
   'picker-choose'(d) {
     const s = ui.sheet;
+    if (s.target === 'replace') {
+      const loc = locateWE(s.weId); if (!loc) return;
+      const nw = makeWE(d.id, {}, loc.w.startedAt);
+      const warm = loc.we.sets.filter(x => x.warmup).length, work = loc.we.sets.length - warm;
+      nw.sets = [];
+      for (let i = 0; i < warm; i++) nw.sets.push(makeSet(true));
+      for (let i = 0; i < Math.max(1, work); i++) nw.sets.push(makeSet(false));
+      nw.restSec = loc.we.restSec; nw.targetReps = loc.we.targetReps;
+      const i = loc.w.exercises.indexOf(loc.we);
+      loc.w.exercises.splice(i, 1, nw); ui.openWE = nw.id; touch(loc.w);
+      persist(); ui.sheet = null; toast('Vervangen door ' + exName(d.id)); render(); return;
+    }
     if (s.target === 'workout') {
       const w = getWorkout(ui.ctxWorkoutId); if (!w) return;
       const we = makeWE(d.id, {}, w.startedAt); w.exercises.push(we); ui.openWE = we.id; touch(w);
@@ -1665,6 +2233,8 @@ const inputs = {
   'set-kg'(el) { const loc = locateWE(el.dataset.we); if (!loc) return; const s = loc.we.sets.find(x => x.id === el.dataset.set); if (s) { s.kg = parseNum(el.value); touch(loc.w); persist(); } },
   'set-reps'(el) { const loc = locateWE(el.dataset.we); if (!loc) return; const s = loc.we.sets.find(x => x.id === el.dataset.set); if (s) { const n = parseNum(el.value); s.reps = n == null ? null : Math.round(n); touch(loc.w); persist(); } },
   'note'(el) { const loc = locateWE(el.dataset.we); if (loc) { loc.we.note = el.value; touch(loc.w); persist(); } },
+  'pin-note'(el) { const ex = getEx(el.dataset.id); if (ex) { ex.pinnedNote = el.value; touch(ex); persist(); } },
+  'plate-total'(el) { ui.sheet.total = parseNum(el.value); const o = $('#plate-out'); if (o) o.innerHTML = plateHtml(ui.sheet.total, ui.sheet.bar); },
   'pk-name'(el) { ui.sheet.newName = el.value; },
   'picker-q'(el) { ui.sheet.q = el.value; const l = $('#picker-list'); if (l) l.innerHTML = pickerList(); },
   't-name'(el) { const t = currentTemplate(); if (t) { t.name = el.value; touch(t); persist(); } },
@@ -1672,6 +2242,7 @@ const inputs = {
 };
 const changes = {
   'pk-muscle'(el) { const s = ui.sheet; s.group = el.value; s.act = Object.assign({}, GROUP_ACT[el.value]); renderSheet(); },
+  'plate-bar'(el) { ui.sheet.bar = Number(el.value); const o = $('#plate-out'); if (o) o.innerHTML = plateHtml(ui.sheet.total, ui.sheet.bar); },
   'pk-equip'(el) { ui.sheet.equip = el.value; },
   'start-date'(el) { ui.startDate = el.value && el.value <= todayStr() ? el.value : null; render(); },
   'w-date'(el) {
@@ -1709,6 +2280,11 @@ document.addEventListener('click', e => {
   const inp = lab.querySelector('input'); if (!inp || e.target === inp) return;
   try { if (inp.showPicker) { e.preventDefault(); inp.showPicker(); } } catch (x) { }
 });
+document.addEventListener('toggle', e => {
+  const t = e.target; if (!t || !t.dataset || !t.dataset.tog) return;
+  if (t.dataset.tog === 'recov') ui.recovOpen = t.open;
+  if (t.dataset.tog === 'pick-map' && ui.sheet) ui.sheet.mapOpen = t.open;
+}, true);
 document.addEventListener('focusin', e => { if (e.target.classList && e.target.classList.contains('num')) { try { e.target.select(); } catch (x) { } } });
 document.addEventListener('pointerdown', unlockAudio, { passive: true });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') persist(); else { updateClocks(); syncWakeLock(); } });
@@ -1721,7 +2297,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:' && !inFrame) 
 if (activeWorkout()) ui.tab = 'training';
 
 /* Testhaakje: maakt de rekenregels los te controleren */
-window.__trainingslog = { muscleLoad, workingWeight, mergeData, recordsIn, placeholders, migrate };
+window.__trainingslog = { PROGRAMS, programLoad, EX_ACT, LIBRARY, matchQuery, platesFor, muscleLoad, workingWeight, mergeData, recordsIn, placeholders, migrate };
 
 render();
 })();
